@@ -9,10 +9,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Pane activePanee;
-
         activePanee = loginPage.login();
-//        activePanee = onLogin.onLogin();
-//        activePanee = SignUP.signUp();
+        //activePanee = SignUP.signUp();
+        //activePanee = SignUp.signUP();
 
         primaryStage.setTitle("CV Builder");
         primaryStage.setScene(new Scene(activePanee, 900, 650));
@@ -24,3 +23,4 @@ public class Main extends Application {
         launch(args);
     }
 }
+//C:\\Users\\DELL\\Desktop\\cv\\Resources\\
