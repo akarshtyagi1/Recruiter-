@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -42,6 +44,13 @@ public class loginPage {
         Button bLogin = new Button("Login");
         Button bSignUp = new Button("SignUp");
 
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+
+            }
+        };
+
+        bSignUp.setOnAction(event);
 
         hb2.setAlignment(Pos.CENTER);
         hb1.getChildren().addAll(imageView);
@@ -50,7 +59,7 @@ public class loginPage {
         pane.getChildren().addAll(cPane);
 
         cPane.setPadding(new Insets(50));
-        BackgroundFill b_fill = new BackgroundFill(Color.rgb(200,200,200), CornerRadii.EMPTY, Insets.EMPTY);
+        BackgroundFill b_fill = new BackgroundFill(Color.rgb(255,255,255), CornerRadii.EMPTY, Insets.EMPTY);
         Background bground = new Background(b_fill);
         cPane.setBackground(bground);
 
@@ -60,4 +69,7 @@ public class loginPage {
 
         return pane;
     }
+
+
+
 }

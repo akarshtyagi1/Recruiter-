@@ -16,11 +16,9 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 public class onLogin {
-    static BorderPane signUP() throws FileNotFoundException {
+    static BorderPane onLogin() throws FileNotFoundException {
         BorderPane root = new BorderPane();
         Rectangle2D r = Screen.getPrimary().getBounds();
-
-
 
 
         FileInputStream input = new FileInputStream("F:\\cvBuilder\\Resources\\backkground.jpg");
