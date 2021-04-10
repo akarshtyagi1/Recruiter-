@@ -1,18 +1,20 @@
 package sample;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Pane activePanee;
+        activePanee = loginPage.login();
+        activePanee = SignUP.signUp();
+        //activePanee = SignUp.signUP();
+
+        primaryStage.setTitle("CV Builder");
+        primaryStage.setScene(new Scene(activePanee, 900, 650));
         primaryStage.show();
     }
 
