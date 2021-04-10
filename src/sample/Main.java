@@ -23,3 +23,4 @@ public class Main extends Application {
         launch(args);
     }
 }
+//C:\\Users\\DELL\\Desktop\\cv\\Resources\\

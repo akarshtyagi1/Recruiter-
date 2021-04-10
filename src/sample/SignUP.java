@@ -28,7 +28,7 @@ public class SignUP {
         heading.setTextFill(Color.RED);
         pane.setAlignment(Pos.CENTER);
 
-        Image image = new Image(new FileInputStream("F:\\cvBuilder\\Resources\\iamge.png"));
+        Image image = new Image(new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\iamge.png"));
         ImageView imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
 

@@ -23,7 +23,7 @@ public class onLogin {
 
 
 
-        FileInputStream input = new FileInputStream("F:\\cvBuilder\\Resources\\backkground.jpg");
+        FileInputStream input = new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\backkground.jpg");
         Image image = new Image(input);
         BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100,100,TRUE,TRUE,TRUE,FALSE));
         Background background = new Background(backgroundimage);
@@ -40,7 +40,7 @@ public class onLogin {
         info.setVgap(10);
         info.setGridLinesVisible(TRUE);
 
-        FileInputStream input1 = new FileInputStream("F:\\cvBuilder\\Resources\\personal.png");
+        FileInputStream input1 = new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\personal.png");
         Image i1=new Image(input1);
         ImageView im1=new ImageView(i1);
         im1.setFitWidth(125);im1.setFitHeight(125);
@@ -48,7 +48,7 @@ public class onLogin {
         l1.setText("Personal Informtion");
         VBox v1=new VBox();
         v1.getChildren().addAll(im1,l1);
-        FileInputStream input2 = new FileInputStream("F:\\cvBuilder\\Resources\\education.png");
+        FileInputStream input2 = new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\education.png");
         Image i2=new Image(input2);
         ImageView im2=new ImageView(i2);
         im2.setFitWidth(125);im2.setFitHeight(125);
@@ -56,7 +56,7 @@ public class onLogin {
         l2.setText("Education");
         VBox v2=new VBox();
         v2.getChildren().addAll(im2,l2);
-        FileInputStream input3 = new FileInputStream("F:\\cvBuilder\\Resources\\experience.png");
+        FileInputStream input3 = new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\experience.png");
         Image i3=new Image(input3);
         ImageView im3=new ImageView(i3);
         im3.setFitWidth(125);im3.setFitHeight(125);
