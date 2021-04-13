@@ -8,15 +8,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.image.ImageView;                    //D:\shiv nadar university\Projects\cv\ -- jagga's
+import javafx.scene.layout.*;                           //F:\cvBuilder\Resources\  -- akarsh's
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-public class Main extends Application {
+public class onLogin extends Application {
 
     Scene sc,scene1,scene2,scene3;
     Stage window;
@@ -32,7 +32,7 @@ public class Main extends Application {
         Rectangle2D r = Screen.getPrimary().getBounds();
 
 //background image
-        FileInputStream input = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\backkground.jpg");
+        FileInputStream input = new FileInputStream("F:\\cvBuilder\\Resources\\backkground.jpg");
         Image image = new Image(input);
         BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100,100,TRUE,TRUE,TRUE,FALSE));
         Background background = new Background(backgroundimage);
@@ -49,7 +49,7 @@ public class Main extends Application {
         info.setGridLinesVisible(TRUE);
 
 //personal information
-        FileInputStream input1 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\personal.png");
+        FileInputStream input1 = new FileInputStream("F:\\cvBuilder\\Resources\\personal.png");
         Image i1=new Image(input1);
         ImageView im1=new ImageView(i1);
         im1.setFitWidth(125);im1.setFitHeight(125);
@@ -59,7 +59,7 @@ public class Main extends Application {
         v1.getChildren().addAll(im1,B1);
 
 //education
-        FileInputStream input2 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\education.png");
+        FileInputStream input2 = new FileInputStream("F:\\cvBuilder\\Resources\\education.png");
         Image i2=new Image(input2);
         ImageView im2=new ImageView(i2);
         im2.setFitWidth(125);im2.setFitHeight(125);
@@ -72,7 +72,7 @@ public class Main extends Application {
         v2.getChildren().addAll(im2,B2);
 
 //exxperience
-        FileInputStream input3 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\experience.png");
+        FileInputStream input3 = new FileInputStream("F:\\cvBuilder\\Resources\\experience.png");
         Image i3=new Image(input3);
         ImageView im3=new ImageView(i3);
         im3.setFitWidth(125);im3.setFitHeight(125);
@@ -260,11 +260,6 @@ public class Main extends Application {
         VBox vr3=new VBox();
         vr3.getChildren().addAll(Br3);
         scene3 = new Scene(vr3,0.90*r.getWidth(), 0.90*r.getHeight());
-
-
-
-
-
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(sc);

@@ -9,8 +9,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Pane activePanee;
-        activePanee = loginPage.login();
-        //activePanee = SignUP.signUp();
+        //activePanee = loginPage.login();
+        activePanee = SignUP.signUp();
         //activePanee = SignUp.signUP();
 
         primaryStage.setTitle("CV Builder");
