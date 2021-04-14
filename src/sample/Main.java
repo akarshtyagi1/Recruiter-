@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -51,15 +52,18 @@ public class Main extends Application {
         heading1.setTextFill(Color.ANTIQUEWHITE);
         pane1.setAlignment(Pos.CENTER);
 
-        Image image1 = new Image(new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\iamge.png"));
+        Image image1 = new Image(new FileInputStream("F:\\cvBuilder\\Resources\\iamge.png"));
         ImageView imageView1 = new ImageView(image1);
         imageView1.setPreserveRatio(true);
 
 
-        Label luser = new Label("Username");
+        Label luser = new Label("Email");
         TextField username = new TextField();
+        username.setPromptText("email");
         Label lpass = new Label("Password");
-        TextField password = new TextField();
+        PasswordField password = new PasswordField();
+        password.setPromptText("Password");
+
         Button bLogin = new Button("Login");
         Button bSignUp = new Button("SignUp");
 
@@ -82,7 +86,7 @@ public class Main extends Application {
 
 
         //vwewjhviqbdeuiwdbeuiqdbqikbd
-        Statement stmt = conn.createStatement();
+        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         GridPane pane2 = new GridPane();
         HBox cPane2 = new HBox();
         HBox hb21 = new HBox();
@@ -96,7 +100,7 @@ public class Main extends Application {
         pane2.setAlignment(Pos.CENTER);
 
 
-        Image image2 = new Image(new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\iamge.png"));
+        Image image2 = new Image(new FileInputStream("F:\\cvBuilder\\Resources\\iamge.png"));
         ImageView imageView2 = new ImageView(image2);
         imageView2.setPreserveRatio(true);
 
@@ -131,12 +135,11 @@ public class Main extends Application {
 
 
 //inrejiv3nvvwidn3cxhuweicw
-        window = primaryStage;
         BorderPane root = new BorderPane();
         Rectangle2D r = Screen.getPrimary().getBounds();
 
 //background image
-        FileInputStream input = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\backkground.jpg");
+        FileInputStream input = new FileInputStream("F:/cvBuilder/Resources/backkground.jpg");
         Image image = new Image(input);
         BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, TRUE, TRUE, TRUE, FALSE));
         Background background = new Background(backgroundimage);
@@ -153,7 +156,7 @@ public class Main extends Application {
         info.setGridLinesVisible(TRUE);
 
 //personal information
-        FileInputStream input1 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\personal.png");
+        FileInputStream input1 = new FileInputStream("F:/cvBuilder/Resources/personal.png");
         Image i1 = new Image(input1);
         ImageView im1 = new ImageView(i1);
         im1.setFitWidth(125);
@@ -164,7 +167,7 @@ public class Main extends Application {
         v1.getChildren().addAll(im1, B1);
 
 //education and experience
-        FileInputStream input2 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\education.png");
+        FileInputStream input2 = new FileInputStream("F:/cvBuilder/Resources/education.png");
         Image i2 = new Image(input2);
         ImageView im2 = new ImageView(i2);
         im2.setFitWidth(125);
@@ -178,7 +181,7 @@ public class Main extends Application {
         v2.getChildren().addAll(im2, B2);
 
 //Projects and PR
-        FileInputStream input3 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\experience.png");
+        FileInputStream input3 = new FileInputStream("F:/cvBuilder/Resources/experience.png");
         Image i3 = new Image(input3);
         ImageView im3 = new ImageView(i3);
         im3.setFitWidth(125);
@@ -193,7 +196,7 @@ public class Main extends Application {
 
 
 //skills and ECA
-        FileInputStream input4 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\experience.png");
+        FileInputStream input4 = new FileInputStream("F:/cvBuilder/Resources/experience.png");
         Image i4 = new Image(input4);
         ImageView im4 = new ImageView(i4);
         im4.setFitWidth(125);
@@ -221,16 +224,16 @@ public class Main extends Application {
 
 //Button Actions on Onlogin Page
         B1.setOnAction(e -> {
-            window.setScene(scene1);
+            primaryStage.setScene(scene1);
         });
         B2.setOnAction(e -> {
-            window.setScene(scene2);
+            primaryStage.setScene(scene2);
         });
         B3.setOnAction(e -> {
-            window.setScene(scene3);
+            primaryStage.setScene(scene3);
         });
         B4.setOnAction(e -> {
-            window.setScene(scene4);
+            primaryStage.setScene(scene4);
         });
 
 
@@ -285,7 +288,7 @@ public class Main extends Application {
 
         //Location
         VBox location = new VBox();
-        Label Llabel = new Label("Adress");
+        Label Llabel = new Label("Address");
         Llabel.setStyle("-fx-font-size: 30px");
         GridPane Linfo = new GridPane();
 
@@ -293,7 +296,7 @@ public class Main extends Application {
         TextField Lcountryinput = new TextField();
         Label Lstate = new Label("Date of birth");
         TextField Lstateinput = new TextField();
-        Label Lpincode = new Label("Pincode");
+        Label Lpincode = new Label("Pin code");
         TextField Lpincodeinput = new TextField();
         Label Lhouse = new Label("House Adress");
         TextField Lhouseinput = new TextField();
@@ -549,9 +552,7 @@ public class Main extends Application {
 
         Sinfo.add(Sname, 0, 0);
         Sinfo.add(Snameinput, 1, 0);
-
         skills.getChildren().addAll(Slabel, Sinfo);
-
 
         //
         VBox extracurricular = new VBox();
@@ -572,38 +573,80 @@ public class Main extends Application {
         scene4 = new Scene(SECA, 0.90 * r.getWidth(), 0.90 * r.getHeight());
 
 
-        bSignUp.setOnAction(e -> primaryStage.setScene(signup));
+        bSignUp.setOnAction(e -> {
+            Temail.setText("");
+            pass1.setText("");
+            pass2.setText("");
+            primaryStage.setScene(signup);
+        });
         bRegister.setOnAction(e -> {
+
             String email = Temail.getText();
             String p1 = pass1.getText();
-            String p2 = pass1.getText();
+            String p2 = pass2.getText();
 
-            if (email.contains("@gmail.com")) {
-                if (p1.length() > 0 && p2.length() > 0) {
-                    if (p1.equals(p2)) {
-                        String sql = "Insert into credentials(username,password) values('" + email + "','" + p1 + "')";
-                        System.out.println(sql);
-                        try {
-                            stmt.executeUpdate(sql);
-                            primaryStage.setScene(login);
-                        } catch (SQLException throwables) {
-                            System.out.println("something went wrong!!");
+            try{
+                if (email.contains("@gmail.com")) {
+                    if (p1.length() > 0 && p2.length() > 0) {
+
+                        if (p1.equals(p2)) {
+                            String sql2 = "select username from credentials";
+                            ResultSet rs = stmt.executeQuery(sql2);
+                            boolean profileCheck =TRUE;
+
+                            //while to check if user already registered
+                            while(profileCheck && rs.next()){
+                                if(rs.getString("username").equals(email))
+                                    profileCheck = FALSE;
+                            }
+
+                            //if not registered then
+                            if(profileCheck){
+                                String sql1 = "Insert into credentials(username,password) values('" + email + "','" + p1 + "')";
+                                System.out.println(sql1);
+                                stmt.executeUpdate(sql1);
+                                primaryStage.setScene(login);
+                            }else
+                                System.out.println("user already registered");
+
+                        } else {
+                            System.out.println("Check password");
                         }
-//                            catch (FileNotFoundException fileNotFoundException) {
-//                                fileNotFoundException.printStackTrace();
-//                            }
                     } else {
-                        System.out.println("Check password");
+                        System.out.println("Enter a valid password");
                     }
-                } else {
-                    System.out.println("Enter a valid password");
-                }
-            } else
-                System.out.println("Please enter a valid email");
+                } else
+                    System.out.println("Please enter a valid email");
+            }catch (SQLException a){
+                a.printStackTrace();
+            }
+
         });
 
         bLogin.setOnAction(e -> {
-            primaryStage.setScene(sc);
+            try {
+                String email = username.getText();
+                String pass = password.getText();
+                ResultSet rs = stmt.executeQuery("select * from credentials where username = '" + email + "'");
+
+                boolean checkuser = FALSE;
+                while(rs.next()){
+                    if(rs.getString("username").equals(email)){
+                        checkuser = TRUE;
+                    }
+                }
+                rs.absolute(1);
+                if(checkuser && rs.getString("password").equals(pass)){
+                    primaryStage.setScene(sc);
+                }else if(checkuser && !rs.getString("password").equals(pass)){
+                    System.out.println("Incorrect password");
+                }else
+                    System.out.println("User not registered");
+
+            }catch(SQLException exception){
+                exception.printStackTrace();
+            }
+
         });
 
         primaryStage.setTitle("CV Builder");
@@ -660,7 +703,7 @@ public class Main extends Application {
 //        heading.setTextFill(Color.ANTIQUEWHITE);
 //        pane.setAlignment(Pos.CENTER);
 //
-//        Image image = new Image(new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\iamge.png"));
+//        Image image = new Image(new FileInputStream("F:\cvBuilder\Resources\\\iamge.png"));
 //        ImageView imageView = new ImageView(image);
 //        imageView.setPreserveRatio(true);
 //
@@ -741,7 +784,7 @@ public class Main extends Application {
 //        pane.setAlignment(Pos.CENTER);
 //
 //
-//        Image image = new Image(new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\iamge.png"));
+//        Image image = new Image(new FileInputStream("F:\cvBuilder\Resources\\\iamge.png"));
 //        ImageView imageView = new ImageView(image);
 //        imageView.setPreserveRatio(true);
 //
@@ -827,7 +870,7 @@ public class Main extends Application {
 //        Rectangle2D r = Screen.getPrimary().getBounds();
 //
 //        //background image
-//        FileInputStream input = new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\backkground.jpg");
+//        FileInputStream input = new FileInputStream("F:\cvBuilder\Resources\\\backkground.jpg");
 //        Image image = new Image(input);
 //        BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100,100,TRUE,TRUE,TRUE,FALSE));
 //        Background background = new Background(backgroundimage);
@@ -844,7 +887,7 @@ public class Main extends Application {
 //        info.setGridLinesVisible(TRUE);
 //
 //        //personal information
-//        FileInputStream input1 = new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\personal.png");
+//        FileInputStream input1 = new FileInputStream("F:\cvBuilder\Resources\\\personal.png");
 //        Image i1=new Image(input1);
 //        ImageView im1=new ImageView(i1);
 //        im1.setFitWidth(125);im1.setFitHeight(125);
@@ -854,7 +897,7 @@ public class Main extends Application {
 //        v1.getChildren().addAll(im1,B1);
 //
 //        //education
-//        FileInputStream input2 = new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\education.png");
+//        FileInputStream input2 = new FileInputStream("F:\cvBuilder\Resources\\\education.png");
 //        Image i2=new Image(input2);
 //        ImageView im2=new ImageView(i2);
 //        im2.setFitWidth(125);im2.setFitHeight(125);
@@ -867,7 +910,7 @@ public class Main extends Application {
 //        v2.getChildren().addAll(im2,B2);
 //
 //        //exxperience
-//        FileInputStream input3 = new FileInputStream("C:\\Users\\DELL\\Desktop\\cv\\Resources\\experience.png");
+//        FileInputStream input3 = new FileInputStream("F:\cvBuilder\Resources\\\experience.png");
 //        Image i3=new Image(input3);
 //        ImageView im3=new ImageView(i3);
 //        im3.setFitWidth(125);im3.setFitHeight(125);
@@ -1059,7 +1102,7 @@ public class Main extends Application {
 //    }
 //
 //}
-////C:\\Users\\DELL\\Desktop\\cv\\Resources\\
+////F:\cvBuilder\Resources\\\
 //
 //
 //
