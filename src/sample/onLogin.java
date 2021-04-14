@@ -31,7 +31,7 @@ public class onLogin extends Application {
         BorderPane root = new BorderPane();
         Rectangle2D r = Screen.getPrimary().getBounds();
 
-//background image
+        //background image
         FileInputStream input = new FileInputStream("F:\\cvBuilder\\Resources\\backkground.jpg");
         Image image = new Image(input);
         BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100,100,TRUE,TRUE,TRUE,FALSE));
@@ -48,7 +48,7 @@ public class onLogin extends Application {
         info.setVgap(10);
         info.setGridLinesVisible(TRUE);
 
-//personal information
+        //personal information
         FileInputStream input1 = new FileInputStream("F:\\cvBuilder\\Resources\\personal.png");
         Image i1=new Image(input1);
         ImageView im1=new ImageView(i1);
@@ -58,7 +58,7 @@ public class onLogin extends Application {
         VBox v1=new VBox();
         v1.getChildren().addAll(im1,B1);
 
-//education
+        //education
         FileInputStream input2 = new FileInputStream("F:\\cvBuilder\\Resources\\education.png");
         Image i2=new Image(input2);
         ImageView im2=new ImageView(i2);
@@ -71,7 +71,7 @@ public class onLogin extends Application {
         VBox v2=new VBox();
         v2.getChildren().addAll(im2,B2);
 
-//exxperience
+        //exxperience
         FileInputStream input3 = new FileInputStream("F:\\cvBuilder\\Resources\\experience.png");
         Image i3=new Image(input3);
         ImageView im3=new ImageView(i3);
@@ -96,7 +96,7 @@ public class onLogin extends Application {
 
 
 
-//Button Actions on Onlogin Page
+        //Button Actions on Onlogin Page
         B1.setOnAction(e->{
             window.setScene(scene1);
         });
@@ -109,7 +109,7 @@ public class onLogin extends Application {
 
 
 
-//Scene of personal information
+        //Scene of personal information
         //About
         VBox about=new VBox();
         Label Alabel=new Label("About");
@@ -231,7 +231,6 @@ public class onLogin extends Application {
         scene1 = new Scene(PI,0.90*r.getWidth(), 0.90*r.getHeight());
 
 
-
         //about.setAlignment(Pos.CENTER);
 
                 /*Button Br1=new Button();
@@ -239,8 +238,9 @@ public class onLogin extends Application {
         Br1.setOnAction(e->{
             window.setScene(sc);
         });
-*/
-//Scene of Education information
+        */
+        //Scene of Education information
+
         Button Br2=new Button();
         Br2.setText("back");
         Br2.setOnAction(e->{
@@ -251,7 +251,7 @@ public class onLogin extends Application {
         scene2 = new Scene(vr2,0.90*r.getWidth(), 0.90*r.getHeight());
 
 
-//Scene of Experience
+        //Scene of Experience
         Button Br3=new Button();
         Br3.setText("back");
         Br3.setOnAction(e->{
@@ -265,6 +265,5 @@ public class onLogin extends Application {
         primaryStage.setScene(sc);
         primaryStage.show();
     }
-
 
 }
