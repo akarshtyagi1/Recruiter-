@@ -32,7 +32,7 @@ public class onLogin extends Application {
         Rectangle2D r = Screen.getPrimary().getBounds();
 
         //background image
-        FileInputStream input = new FileInputStream("F:\\cvBuilder\\Resources\\backkground.jpg");
+        FileInputStream input = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\backkground.jpg");
         Image image = new Image(input);
         BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100,100,TRUE,TRUE,TRUE,FALSE));
         Background background = new Background(backgroundimage);
@@ -49,7 +49,7 @@ public class onLogin extends Application {
         info.setGridLinesVisible(TRUE);
 
         //personal information
-        FileInputStream input1 = new FileInputStream("F:\\cvBuilder\\Resources\\personal.png");
+        FileInputStream input1 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\personal.png");
         Image i1=new Image(input1);
         ImageView im1=new ImageView(i1);
         im1.setFitWidth(125);im1.setFitHeight(125);
@@ -59,7 +59,7 @@ public class onLogin extends Application {
         v1.getChildren().addAll(im1,B1);
 
         //education
-        FileInputStream input2 = new FileInputStream("F:\\cvBuilder\\Resources\\education.png");
+        FileInputStream input2 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\education.png");
         Image i2=new Image(input2);
         ImageView im2=new ImageView(i2);
         im2.setFitWidth(125);im2.setFitHeight(125);
@@ -72,7 +72,7 @@ public class onLogin extends Application {
         v2.getChildren().addAll(im2,B2);
 
         //exxperience
-        FileInputStream input3 = new FileInputStream("F:\\cvBuilder\\Resources\\experience.png");
+        FileInputStream input3 = new FileInputStream("D:\\shiv nadar university\\Projects\\cv\\experience.png");
         Image i3=new Image(input3);
         ImageView im3=new ImageView(i3);
         im3.setFitWidth(125);im3.setFitHeight(125);
