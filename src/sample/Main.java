@@ -31,17 +31,21 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 public class Main extends Application {
-    private static database myserver = new database();
-    private static Connection conn = myserver.main();
-
     static Scene sc, scene1, scene2, scene3, scene4;
     static Stage window;
     static Scene mainScene;
     static Scene login, signup;
+    private static database myserver = new database();
+    private static Connection conn = myserver.main();
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        // loginPage
         GridPane pane1 = new GridPane();
         HBox cPane1 = new HBox();
         HBox hb11 = new HBox();
@@ -64,13 +68,15 @@ public class Main extends Application {
         Label lpass = new Label("Password");
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
+        Label Lmsg = new Label("");
+        Lmsg.setTextFill(Color.RED);
 
         Button bLogin = new Button("Login");
         Button bSignUp = new Button("SignUp");
 
         hb12.setAlignment(Pos.CENTER);
         hb11.getChildren().addAll(imageView1);
-        hb12.getChildren().addAll(heading1, luser, username, lpass, password, bSignUp, bLogin);
+        hb12.getChildren().addAll(heading1, luser, username, lpass, password,Lmsg, bSignUp, bLogin);
         cPane1.getChildren().addAll(hb11, hb12);
         pane1.getChildren().addAll(cPane1);
 
@@ -86,7 +92,7 @@ public class Main extends Application {
         login = new Scene(pane1, 900, 650);
 
 
-        //vwewjhviqbdeuiwdbeuiqdbqikbd
+        //signUP Page
         Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         GridPane pane2 = new GridPane();
         HBox cPane2 = new HBox();
@@ -116,10 +122,12 @@ public class Main extends Application {
         PasswordField pass2 = new PasswordField();
         pass2.setPromptText("Confirm Password");
         Button bRegister = new Button("Register");
+        Label Smsg = new Label("");
+        Smsg.setTextFill(Color.RED);
 
         hb22.setAlignment(Pos.CENTER);
         hb21.getChildren().addAll(imageView2);
-        hb22.getChildren().addAll(heading2, Lemail, Temail, LPassword, pass1, LcPassword, pass2, bRegister);
+        hb22.getChildren().addAll(heading2, Lemail, Temail, LPassword, pass1, LcPassword, pass2,Smsg, bRegister);
         cPane2.getChildren().addAll(hb21, hb22);
         pane2.getChildren().addAll(cPane2);
 
@@ -702,8 +710,13 @@ public class Main extends Application {
             Temail.setText("");
             pass1.setText("");
             pass2.setText("");
+            username.setText("");
+            password.setText("");
+            Lmsg.setText("");
             primaryStage.setScene(signup);
         });
+
+
         bRegister.setOnAction(e -> {
 
             String email = Temail.getText();
@@ -731,17 +744,24 @@ public class Main extends Application {
                                 System.out.println(sql1);
                                 stmt.executeUpdate(sql1);
                                 primaryStage.setScene(login);
-                            }else
+                                Smsg.setText("");
+                            }else {
+                                Smsg.setText("email already registered");
                                 System.out.println("user already registered");
+                            }
 
                         } else {
+                            Smsg.setText("password confirmation failed");
                             System.out.println("Check password");
                         }
                     } else {
+                        Smsg.setText("enter a paassword");
                         System.out.println("Enter a valid password");
                     }
-                } else
+                } else {
+                    Smsg.setText("invalid email");
                     System.out.println("Please enter a valid email");
+                }
             }catch (SQLException a){
                 a.printStackTrace();
             }
@@ -763,10 +783,14 @@ public class Main extends Application {
                 rs.absolute(1);
                 if(checkuser && rs.getString("password").equals(pass)){
                     primaryStage.setScene(sc);
+                    Lmsg.setText("");
                 }else if(checkuser && !rs.getString("password").equals(pass)){
+                    Lmsg.setText("Incorrect password");
                     System.out.println("Incorrect password");
-                }else
+                }else {
+                    Lmsg.setText("Signup first!");
                     System.out.println("User not registered");
+                }
 
             }catch(SQLException exception){
                 exception.printStackTrace();
@@ -781,10 +805,6 @@ public class Main extends Application {
         primaryStage.setScene(login);
         primaryStage.show();
 
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 
