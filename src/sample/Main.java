@@ -25,6 +25,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -52,7 +53,7 @@ public class Main extends Application {
         heading1.setTextFill(Color.ANTIQUEWHITE);
         pane1.setAlignment(Pos.CENTER);
 
-        Image image1 = new Image(new FileInputStream("F:\\cvBuilder\\Resources\\iamge.png"));
+        Image image1 = new Image(new FileInputStream("Resources/iamge.png"));
         ImageView imageView1 = new ImageView(image1);
         imageView1.setPreserveRatio(true);
 
@@ -100,7 +101,7 @@ public class Main extends Application {
         pane2.setAlignment(Pos.CENTER);
 
 
-        Image image2 = new Image(new FileInputStream("F:\\cvBuilder\\Resources\\iamge.png"));
+        Image image2 = new Image(new FileInputStream("Resources/iamge.png"));
         ImageView imageView2 = new ImageView(image2);
         imageView2.setPreserveRatio(true);
 
@@ -139,7 +140,7 @@ public class Main extends Application {
         Rectangle2D r = Screen.getPrimary().getBounds();
 
 //background image
-        FileInputStream input = new FileInputStream("F:/cvBuilder/Resources/backkground.jpg");
+        FileInputStream input = new FileInputStream("Resources/backkground.jpg");
         Image image = new Image(input);
         BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, TRUE, TRUE, TRUE, FALSE));
         Background background = new Background(backgroundimage);
@@ -156,7 +157,7 @@ public class Main extends Application {
         info.setGridLinesVisible(TRUE);
 
 //personal information
-        FileInputStream input1 = new FileInputStream("F:/cvBuilder/Resources/personal.png");
+        FileInputStream input1 = new FileInputStream("Resources/personal.png");
         Image i1 = new Image(input1);
         ImageView im1 = new ImageView(i1);
         im1.setFitWidth(125);
@@ -167,7 +168,7 @@ public class Main extends Application {
         v1.getChildren().addAll(im1, B1);
 
 //education and experience
-        FileInputStream input2 = new FileInputStream("F:/cvBuilder/Resources/education.png");
+        FileInputStream input2 = new FileInputStream("Resources/education.png");
         Image i2 = new Image(input2);
         ImageView im2 = new ImageView(i2);
         im2.setFitWidth(125);
@@ -181,7 +182,7 @@ public class Main extends Application {
         v2.getChildren().addAll(im2, B2);
 
 //Projects and PR
-        FileInputStream input3 = new FileInputStream("F:/cvBuilder/Resources/experience.png");
+        FileInputStream input3 = new FileInputStream("Resources/experience.png");
         Image i3 = new Image(input3);
         ImageView im3 = new ImageView(i3);
         im3.setFitWidth(125);
@@ -196,7 +197,7 @@ public class Main extends Application {
 
 
 //skills and ECA
-        FileInputStream input4 = new FileInputStream("F:/cvBuilder/Resources/experience.png");
+        FileInputStream input4 = new FileInputStream("Resources/experience.png");
         Image i4 = new Image(input4);
         ImageView im4 = new ImageView(i4);
         im4.setFitWidth(125);
@@ -354,7 +355,16 @@ public class Main extends Application {
         HBox PI = new HBox(PIleft, PIright);
         PI.setAlignment(Pos.TOP_LEFT);
         PI.setSpacing(400);
-        scene1 = new Scene(PI, 0.90 * r.getWidth(), 0.90 * r.getHeight());
+        BorderPane PIfinal=new BorderPane();
+        HBox PIbottom=new HBox();
+        Button PInext=new Button("Next");PInext.setOnAction(e->{primaryStage.setScene(scene2);});
+        Button PIback=new Button("Back");PIback.setOnAction(e->{primaryStage.setScene(sc);});
+        Button PIsave=new Button("Save changes");
+        PIbottom.getChildren().addAll(PIback,PInext,PIsave);
+        PIbottom.setAlignment(Pos.BASELINE_RIGHT);
+        PIfinal.setCenter(PI);
+        PIfinal.setBottom(PIbottom);
+        scene1 = new Scene(PIfinal, 0.90 * r.getWidth(), 0.90 * r.getHeight());
 
 
         //about.setAlignment(Pos.CENTER);
@@ -487,7 +497,16 @@ public class Main extends Application {
         HBox EE = new HBox(EEleft, EEright);
         EE.setAlignment(Pos.TOP_LEFT);
         EE.setSpacing(400);
-        scene2 = new Scene(EE, 0.90 * r.getWidth(), 0.90 * r.getHeight());
+        BorderPane EEfinal=new BorderPane();
+        HBox EEbottom=new HBox();
+        Button EEnext=new Button("Next");EEnext.setOnAction(e->{primaryStage.setScene(scene3);});
+        Button EEback=new Button("Back");EEback.setOnAction(e->{primaryStage.setScene(scene1);});
+        EEbottom.getChildren().addAll(EEback,EEnext);
+        EEbottom.setAlignment(Pos.BASELINE_RIGHT);
+        EEfinal.setCenter(EE);
+        EEfinal.setBottom(EEbottom);
+
+        scene2 = new Scene(EEfinal, 0.90 * r.getWidth(), 0.90 * r.getHeight());
 
 
 //Projects and positions of responsibility
@@ -496,6 +515,14 @@ public class Main extends Application {
         Label Plabel = new Label("Projects");
         Plabel.setStyle("-fx-font-size: 30px");
         GridPane Pinfo = new GridPane();
+        ArrayList<Label> Plarray1=new ArrayList<>();
+        ArrayList<TextField> Ptarray1=new ArrayList<>();
+        ArrayList<Label> Plarray2=new ArrayList<>();
+        ArrayList<TextField> Ptarray2=new ArrayList<>();
+        ArrayList<Label> Plarray3=new ArrayList<>();
+        ArrayList<TextField> Ptarray3=new ArrayList<>();
+
+
 
         Label Pname = new Label("Project Name:");
         TextField Pnameinput = new TextField();
@@ -504,12 +531,33 @@ public class Main extends Application {
         Label Plang = new Label("Languages used");
         TextField Planginput = new TextField();
 
+        Button addproject=new Button("+");
+
+
+        addproject.setOnAction(e->{
+            Plarray1.add(new Label("Project name"));
+            Ptarray1.add(new TextField());
+            Plarray2.add(new Label("Project description "));
+            Ptarray2.add(new TextField());
+            Plarray3.add(new Label("Language used"));
+            Ptarray3.add(new TextField());
+
+            Pinfo.add(Plarray1.get(Plarray1.size()-1),0,Plarray1.size()*3);
+            Pinfo.add(Ptarray1.get(Ptarray1.size()-1),1,Ptarray1.size()*3);
+            Pinfo.add(Plarray2.get(Plarray2.size()-1),0,Plarray1.size()*3+1);
+            Pinfo.add(Ptarray2.get(Ptarray2.size()-1),1,Ptarray1.size()*3+1);
+            Pinfo.add(Plarray3.get(Plarray3.size()-1),0,Plarray1.size()*3+2);
+            Pinfo.add(Ptarray3.get(Ptarray3.size()-1),1,Ptarray1.size()*3+2);
+        });
+
+
         Pinfo.add(Pname, 0, 0);
         Pinfo.add(Pnameinput, 1, 0);
         Pinfo.add(Pdescription, 0, 1);
         Pinfo.add(Pdescriptioninput, 1, 1);
         Pinfo.add(Plang, 0, 2);
         Pinfo.add(Planginput, 1, 2);
+        Pinfo.add(addproject,2,2);
 
         project.getChildren().addAll(Plabel, Pinfo);
 
@@ -519,6 +567,13 @@ public class Main extends Application {
         Label PRlabel = new Label("POsitions and responsibilities");
         PRlabel.setStyle("-fx-font-size: 30px");
         GridPane PRinfo = new GridPane();
+        ArrayList<Label> PRlarray1=new ArrayList<>();
+        ArrayList<TextField> PRtarray1=new ArrayList<>();
+        ArrayList<Label> PRlarray2=new ArrayList<>();
+        ArrayList<TextField> PRtarray2=new ArrayList<>();
+        ArrayList<Label> PRlarray3=new ArrayList<>();
+        ArrayList<TextField> PRtarray3=new ArrayList<>();
+
 
         Label PRname = new Label("Position Name:");
         TextField PRnameinput = new TextField();
@@ -527,31 +582,76 @@ public class Main extends Application {
         Label PRat = new Label("Position held at ");
         TextField PRatinput = new TextField();
 
+
+        Button addresponsibilities=new Button("+");
+
+
+        addresponsibilities.setOnAction(e->{
+            PRlarray1.add(new Label("Project name"));
+            PRtarray1.add(new TextField());
+            PRlarray2.add(new Label("Project description "));
+            PRtarray2.add(new TextField());
+            PRlarray3.add(new Label("Language used"));
+            PRtarray3.add(new TextField());
+
+            PRinfo.add(PRlarray1.get(PRlarray1.size()-1),0,PRlarray1.size()*3);
+            PRinfo.add(PRtarray1.get(PRtarray1.size()-1),1,PRtarray1.size()*3);
+            PRinfo.add(PRlarray2.get(PRlarray2.size()-1),0,PRlarray1.size()*3+1);
+            PRinfo.add(PRtarray2.get(PRtarray2.size()-1),1,PRtarray1.size()*3+1);
+            PRinfo.add(PRlarray3.get(PRlarray3.size()-1),0,PRlarray1.size()*3+2);
+            PRinfo.add(PRtarray3.get(PRtarray3.size()-1),1,PRtarray1.size()*3+2);
+        });
+
         PRinfo.add(PRname, 0, 0);
         PRinfo.add(PRnameinput, 1, 0);
         PRinfo.add(PRdescription, 0, 1);
         PRinfo.add(PRdescriptioninput, 1, 1);
         PRinfo.add(PRat, 0, 2);
         PRinfo.add(PRatinput, 1, 2);
+        PRinfo.add(addresponsibilities, 2, 2);
 
         positionandresponsibilities.getChildren().addAll(PRlabel, PRinfo);
 
         HBox PPR = new HBox(project, positionandresponsibilities);
         PPR.setAlignment(Pos.TOP_LEFT);
         PPR.setSpacing(400);
-        scene3 = new Scene(PPR, 0.90 * r.getWidth(), 0.90 * r.getHeight());
+        BorderPane PPRfinal=new BorderPane();
+        HBox PPRbottom=new HBox();
+        Button PPRnext=new Button("Next");PPRnext.setOnAction(e->{primaryStage.setScene(scene4);});
+        Button PPRback=new Button("Back");PPRback.setOnAction(e->{primaryStage.setScene(scene2);});
+        PPRbottom.getChildren().addAll(PPRback,PPRnext);
+        PPRbottom.setAlignment(Pos.BASELINE_RIGHT);
+        PPRfinal.setCenter(PPR);
+        PPRfinal.setBottom(PPRbottom);
+
+        scene3 = new Scene(PPRfinal, 0.90 * r.getWidth(), 0.90 * r.getHeight());
 //Skills and Extra curricular
         //Skills
         VBox skills = new VBox();
         Label Slabel = new Label("Skills ");
         Slabel.setStyle("-fx-font-size: 30px");
         GridPane Sinfo = new GridPane();
+        ArrayList<Label> Slarray=new ArrayList<>();
+        ArrayList<TextField> Starray=new ArrayList<>();
+
+
 
         Label Sname = new Label("Skill:");
         TextField Snameinput = new TextField();
+        Button addskill=new Button("+");
+
+
+        addskill.setOnAction(e->{
+            Slarray.add(new Label("skill"));
+            Starray.add(new TextField());
+            Sinfo.add(Slarray.get(Slarray.size()-1),0,Slarray.size());
+            Sinfo.add(Starray.get(Starray.size()-1),1,Starray.size());
+        });
 
         Sinfo.add(Sname, 0, 0);
         Sinfo.add(Snameinput, 1, 0);
+        Sinfo.add(addskill, 2, 0);
+
         skills.getChildren().addAll(Slabel, Sinfo);
 
         //
@@ -559,18 +659,43 @@ public class Main extends Application {
         Label ECAlabel = new Label("Extra Curricular Activities");
         ECAlabel.setStyle("-fx-font-size: 30px");
         GridPane ECAinfo = new GridPane();
+        ArrayList<Label> ECAlarray=new ArrayList<>();
+        ArrayList<TextField> ECAtarray=new ArrayList<>();
 
+
+        Button addECA=new Button("+");
         Label ECAname = new Label("ECA Name:");
         TextField ECAnameinput = new TextField();
         ECAinfo.add(ECAname, 0, 0);
         ECAinfo.add(ECAnameinput, 1, 0);
+        ECAinfo.add(addECA, 2, 0);
+
+
+
+
+        addECA.setOnAction(e->{
+            ECAlarray.add(new Label("ECA name"));
+            ECAtarray.add(new TextField());
+            ECAinfo.add(ECAlarray.get(ECAlarray.size()-1),0,ECAlarray.size());
+            ECAinfo.add(ECAtarray.get(ECAtarray.size()-1),1,ECAtarray.size());
+        });
+
 
         extracurricular.getChildren().addAll(ECAlabel, ECAinfo);
 
         HBox SECA = new HBox(skills, extracurricular);
         SECA.setAlignment(Pos.TOP_LEFT);
         SECA.setSpacing(400);
-        scene4 = new Scene(SECA, 0.90 * r.getWidth(), 0.90 * r.getHeight());
+        BorderPane SECAfinal=new BorderPane();
+        HBox SECAbottom=new HBox();
+        Button SECAnext=new Button("Next");SECAnext.setOnAction(e->{primaryStage.setScene(sc);});
+        Button SECAback=new Button("Back");SECAback.setOnAction(e->{primaryStage.setScene(scene3);});
+        SECAbottom.getChildren().addAll(SECAback,SECAnext);
+        SECAbottom.setAlignment(Pos.BASELINE_RIGHT);
+        SECAfinal.setCenter(SECA);
+        SECAfinal.setBottom(SECAbottom);
+
+        scene4 = new Scene(SECAfinal, 0.90 * r.getWidth(), 0.90 * r.getHeight());
 
 
         bSignUp.setOnAction(e -> {
@@ -648,6 +773,9 @@ public class Main extends Application {
             }
 
         });
+
+
+        PIsave.setOnAction(e->{});
 
         primaryStage.setTitle("CV Builder");
         primaryStage.setScene(login);
