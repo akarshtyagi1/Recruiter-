@@ -1,10 +1,11 @@
 package sample;
+
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,22 +21,23 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 public class Main extends Application {
-    static Scene sc, scene1, scene2, scene3, scene4;
-    static Stage window;
-    static Scene mainScene;
-    static Scene login, signup;
-    static String username;
-    static int U_id;
-    private static database myserver = new database();
+
+    private static final database myserver = new database();
     private static final Connection conn = myserver.main();
+    static Scene sc, scene1, scene2, scene3, scene4;
+    static Scene login, signup;
+    static int U_id;
+    Rectangle2D r = Screen.getPrimary().getBounds();
 
     public static void main(String[] args) {
         launch(args);
@@ -43,6 +45,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         // loginPage
         GridPane pane1 = new GridPane();
@@ -75,7 +78,7 @@ public class Main extends Application {
 
         hb12.setAlignment(Pos.CENTER);
         hb11.getChildren().addAll(imageView1);
-        hb12.getChildren().addAll(heading1, luser, username, lpass, password,Lmsg, bSignUp, bLogin);
+        hb12.getChildren().addAll(heading1, luser, username, lpass, password, Lmsg, bSignUp, bLogin);
         cPane1.getChildren().addAll(hb11, hb12);
         pane1.getChildren().addAll(cPane1);
 
@@ -87,12 +90,11 @@ public class Main extends Application {
         BackgroundFill background_fill1 = new BackgroundFill(Color.rgb(48, 71, 94), CornerRadii.EMPTY, Insets.EMPTY);
         Background background1 = new Background(background_fill1);
         pane1.setBackground(background1);
-        //activePanee = login();
-        login = new Scene(pane1, 900, 650);
+
+        login = new Scene(pane1, 0.9*r.getWidth(), 0.9*r.getHeight());
 
 
         //signUP Page
-        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         GridPane pane2 = new GridPane();
         HBox cPane2 = new HBox();
         HBox hb21 = new HBox();
@@ -126,7 +128,7 @@ public class Main extends Application {
 
         hb22.setAlignment(Pos.CENTER);
         hb21.getChildren().addAll(imageView2);
-        hb22.getChildren().addAll(heading2, Lemail, Temail, LPassword, pass1, LcPassword, pass2,Smsg, bRegister);
+        hb22.getChildren().addAll(heading2, Lemail, Temail, LPassword, pass1, LcPassword, pass2, Smsg, bRegister);
         cPane2.getChildren().addAll(hb21, hb22);
         pane2.getChildren().addAll(cPane2);
 
@@ -139,14 +141,14 @@ public class Main extends Application {
         Background background2 = new Background(background_fill2);
         pane2.setBackground(background2);
 
-        signup = new Scene(pane2, 900, 650);
+        signup = new Scene(pane2, 0.9*r.getWidth(), 0.9*r.getHeight());
 
 
-//inrejiv3nvvwidn3cxhuweicw
+        //inrejiv3nvvwidn3cxhuweicw
         BorderPane root = new BorderPane();
-        Rectangle2D r = Screen.getPrimary().getBounds();
 
-//background image
+
+        //background image
         FileInputStream input = new FileInputStream("Resources/backkground.jpg");
         Image image = new Image(input);
         BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(100, 100, TRUE, TRUE, TRUE, FALSE));
@@ -163,7 +165,8 @@ public class Main extends Application {
         info.setVgap(10);
         info.setGridLinesVisible(TRUE);
 
-//personal information
+
+        //personal information
         FileInputStream input1 = new FileInputStream("Resources/personal.png");
         Image i1 = new Image(input1);
         ImageView im1 = new ImageView(i1);
@@ -173,6 +176,7 @@ public class Main extends Application {
         B1.setText("Personal Informtion");
         VBox v1 = new VBox();
         v1.getChildren().addAll(im1, B1);
+
 
 //education and experience
         FileInputStream input2 = new FileInputStream("Resources/education.png");
@@ -228,9 +232,6 @@ public class Main extends Application {
         info.add(v4, 3, 0);
         root.setCenter(info);
         sc = new Scene(root, 0.90 * r.getWidth(), 0.90 * r.getHeight());
-
-
-
 
 
 //Scene of personal information
@@ -360,25 +361,26 @@ public class Main extends Application {
         PI.setAlignment(Pos.CENTER);
         //PI.setAlignment(Pos.TOP_LEFT);
         PI.setSpacing(400);
-        BorderPane PIfinal=new BorderPane();
+        BorderPane PIfinal = new BorderPane();
 
 
-        HBox PIbottom=new HBox();
-        Button PInext=new Button("Next");PInext.setOnAction(e->{primaryStage.setScene(scene2);});
-        Button PIback=new Button("Back");PIback.setOnAction(e->{primaryStage.setScene(sc);});
-        Button PIsave=new Button("Save changes");
+        HBox PIbottom = new HBox();
+        Button PInext = new Button("Next");
+        PInext.setOnAction(e -> {
+            primaryStage.setScene(scene2);
+        });
+        Button PIback = new Button("Back");
+        PIback.setOnAction(e -> {
+            primaryStage.setScene(sc);
+        });
+        Button PIsave = new Button("Save changes");
 
-        PIbottom.getChildren().addAll(PIback,PInext,PIsave);
+        PIbottom.getChildren().addAll(PIback, PInext, PIsave);
         PIbottom.setAlignment(Pos.BASELINE_RIGHT);
 
         PIfinal.setCenter(PI);
         PIfinal.setBottom(PIbottom);
         scene1 = new Scene(PIfinal, 0.90 * r.getWidth(), 0.90 * r.getHeight());
-
-
-
-
-
 
 
 //Scene of Education and Work Experience information
@@ -503,11 +505,17 @@ public class Main extends Application {
         HBox EE = new HBox(EEleft, EEright);
         EE.setAlignment(Pos.TOP_LEFT);
         EE.setSpacing(400);
-        BorderPane EEfinal=new BorderPane();
-        HBox EEbottom=new HBox();
-        Button EEnext=new Button("Next");EEnext.setOnAction(e->{primaryStage.setScene(scene3);});
-        Button EEback=new Button("Back");EEback.setOnAction(e->{primaryStage.setScene(scene1);});
-        EEbottom.getChildren().addAll(EEback,EEnext);
+        BorderPane EEfinal = new BorderPane();
+        HBox EEbottom = new HBox();
+        Button EEnext = new Button("Next");
+        EEnext.setOnAction(e -> {
+            primaryStage.setScene(scene3);
+        });
+        Button EEback = new Button("Back");
+        EEback.setOnAction(e -> {
+            primaryStage.setScene(scene1);
+        });
+        EEbottom.getChildren().addAll(EEback, EEnext);
         EEbottom.setAlignment(Pos.BASELINE_RIGHT);
         EEfinal.setCenter(EE);
         EEfinal.setBottom(EEbottom);
@@ -521,13 +529,12 @@ public class Main extends Application {
         Label Plabel = new Label("Projects");
         Plabel.setStyle("-fx-font-size: 30px");
         GridPane Pinfo = new GridPane();
-        ArrayList<Label> Plarray1=new ArrayList<>();
-        ArrayList<TextField> Ptarray1=new ArrayList<>();
-        ArrayList<Label> Plarray2=new ArrayList<>();
-        ArrayList<TextField> Ptarray2=new ArrayList<>();
-        ArrayList<Label> Plarray3=new ArrayList<>();
-        ArrayList<TextField> Ptarray3=new ArrayList<>();
-
+        ArrayList<Label> Plarray1 = new ArrayList<>();
+        ArrayList<TextField> Ptarray1 = new ArrayList<>();
+        ArrayList<Label> Plarray2 = new ArrayList<>();
+        ArrayList<TextField> Ptarray2 = new ArrayList<>();
+        ArrayList<Label> Plarray3 = new ArrayList<>();
+        ArrayList<TextField> Ptarray3 = new ArrayList<>();
 
 
         Label Pname = new Label("Project Name:");
@@ -537,10 +544,10 @@ public class Main extends Application {
         Label Plang = new Label("Languages used");
         TextField Planginput = new TextField();
 
-        Button addproject=new Button("+");
+        Button addproject = new Button("+");
 
 
-        addproject.setOnAction(e->{
+        addproject.setOnAction(e -> {
             Plarray1.add(new Label("Project name"));
             Ptarray1.add(new TextField());
             Plarray2.add(new Label("Project description "));
@@ -548,12 +555,12 @@ public class Main extends Application {
             Plarray3.add(new Label("Language used"));
             Ptarray3.add(new TextField());
 
-            Pinfo.add(Plarray1.get(Plarray1.size()-1),0,Plarray1.size()*3);
-            Pinfo.add(Ptarray1.get(Ptarray1.size()-1),1,Ptarray1.size()*3);
-            Pinfo.add(Plarray2.get(Plarray2.size()-1),0,Plarray1.size()*3+1);
-            Pinfo.add(Ptarray2.get(Ptarray2.size()-1),1,Ptarray1.size()*3+1);
-            Pinfo.add(Plarray3.get(Plarray3.size()-1),0,Plarray1.size()*3+2);
-            Pinfo.add(Ptarray3.get(Ptarray3.size()-1),1,Ptarray1.size()*3+2);
+            Pinfo.add(Plarray1.get(Plarray1.size() - 1), 0, Plarray1.size() * 3);
+            Pinfo.add(Ptarray1.get(Ptarray1.size() - 1), 1, Ptarray1.size() * 3);
+            Pinfo.add(Plarray2.get(Plarray2.size() - 1), 0, Plarray1.size() * 3 + 1);
+            Pinfo.add(Ptarray2.get(Ptarray2.size() - 1), 1, Ptarray1.size() * 3 + 1);
+            Pinfo.add(Plarray3.get(Plarray3.size() - 1), 0, Plarray1.size() * 3 + 2);
+            Pinfo.add(Ptarray3.get(Ptarray3.size() - 1), 1, Ptarray1.size() * 3 + 2);
         });
 
 
@@ -563,7 +570,7 @@ public class Main extends Application {
         Pinfo.add(Pdescriptioninput, 1, 1);
         Pinfo.add(Plang, 0, 2);
         Pinfo.add(Planginput, 1, 2);
-        Pinfo.add(addproject,2,2);
+        Pinfo.add(addproject, 2, 2);
         project.getChildren().addAll(Plabel, Pinfo);
 
 
@@ -572,12 +579,12 @@ public class Main extends Application {
         Label PRlabel = new Label("POsitions and responsibilities");
         PRlabel.setStyle("-fx-font-size: 30px");
         GridPane PRinfo = new GridPane();
-        ArrayList<Label> PRlarray1=new ArrayList<>();
-        ArrayList<TextField> PRtarray1=new ArrayList<>();
-        ArrayList<Label> PRlarray2=new ArrayList<>();
-        ArrayList<TextField> PRtarray2=new ArrayList<>();
-        ArrayList<Label> PRlarray3=new ArrayList<>();
-        ArrayList<TextField> PRtarray3=new ArrayList<>();
+        ArrayList<Label> PRlarray1 = new ArrayList<>();
+        ArrayList<TextField> PRtarray1 = new ArrayList<>();
+        ArrayList<Label> PRlarray2 = new ArrayList<>();
+        ArrayList<TextField> PRtarray2 = new ArrayList<>();
+        ArrayList<Label> PRlarray3 = new ArrayList<>();
+        ArrayList<TextField> PRtarray3 = new ArrayList<>();
 
 
         Label PRname = new Label("Position Name:");
@@ -588,9 +595,9 @@ public class Main extends Application {
         TextField PRatinput = new TextField();
 
 
-        Button addresponsibilities=new Button("+");
+        Button addresponsibilities = new Button("+");
 
-        addresponsibilities.setOnAction(e->{
+        addresponsibilities.setOnAction(e -> {
             PRlarray1.add(new Label("Project name"));
             PRtarray1.add(new TextField());
             PRlarray2.add(new Label("Project description "));
@@ -598,12 +605,12 @@ public class Main extends Application {
             PRlarray3.add(new Label("Language used"));
             PRtarray3.add(new TextField());
 
-            PRinfo.add(PRlarray1.get(PRlarray1.size()-1),0,PRlarray1.size()*3);
-            PRinfo.add(PRtarray1.get(PRtarray1.size()-1),1,PRtarray1.size()*3);
-            PRinfo.add(PRlarray2.get(PRlarray2.size()-1),0,PRlarray1.size()*3+1);
-            PRinfo.add(PRtarray2.get(PRtarray2.size()-1),1,PRtarray1.size()*3+1);
-            PRinfo.add(PRlarray3.get(PRlarray3.size()-1),0,PRlarray1.size()*3+2);
-            PRinfo.add(PRtarray3.get(PRtarray3.size()-1),1,PRtarray1.size()*3+2);
+            PRinfo.add(PRlarray1.get(PRlarray1.size() - 1), 0, PRlarray1.size() * 3);
+            PRinfo.add(PRtarray1.get(PRtarray1.size() - 1), 1, PRtarray1.size() * 3);
+            PRinfo.add(PRlarray2.get(PRlarray2.size() - 1), 0, PRlarray1.size() * 3 + 1);
+            PRinfo.add(PRtarray2.get(PRtarray2.size() - 1), 1, PRtarray1.size() * 3 + 1);
+            PRinfo.add(PRlarray3.get(PRlarray3.size() - 1), 0, PRlarray1.size() * 3 + 2);
+            PRinfo.add(PRtarray3.get(PRtarray3.size() - 1), 1, PRtarray1.size() * 3 + 2);
         });
 
         PRinfo.add(PRname, 0, 0);
@@ -619,11 +626,17 @@ public class Main extends Application {
         HBox PPR = new HBox(project, positionandresponsibilities);
         PPR.setAlignment(Pos.TOP_LEFT);
         PPR.setSpacing(400);
-        BorderPane PPRfinal=new BorderPane();
-        HBox PPRbottom=new HBox();
-        Button PPRnext=new Button("Next");PPRnext.setOnAction(e->{primaryStage.setScene(scene4);});
-        Button PPRback=new Button("Back");PPRback.setOnAction(e->{primaryStage.setScene(scene2);});
-        PPRbottom.getChildren().addAll(PPRback,PPRnext);
+        BorderPane PPRfinal = new BorderPane();
+        HBox PPRbottom = new HBox();
+        Button PPRnext = new Button("Next");
+        PPRnext.setOnAction(e -> {
+            primaryStage.setScene(scene4);
+        });
+        Button PPRback = new Button("Back");
+        PPRback.setOnAction(e -> {
+            primaryStage.setScene(scene2);
+        });
+        PPRbottom.getChildren().addAll(PPRback, PPRnext);
         PPRbottom.setAlignment(Pos.BASELINE_RIGHT);
         PPRfinal.setCenter(PPR);
         PPRfinal.setBottom(PPRbottom);
@@ -635,19 +648,19 @@ public class Main extends Application {
         Label Slabel = new Label("Skills ");
         Slabel.setStyle("-fx-font-size: 30px");
         GridPane Sinfo = new GridPane();
-        ArrayList<Label> Slarray=new ArrayList<>();
-        ArrayList<TextField> Starray=new ArrayList<>();
+        ArrayList<Label> Slarray = new ArrayList<>();
+        ArrayList<TextField> Starray = new ArrayList<>();
 
 
         Label Sname = new Label("Skill:");
         TextField Snameinput = new TextField();
-        Button addskill=new Button("+");
+        Button addskill = new Button("+");
 
-        addskill.setOnAction(e->{
+        addskill.setOnAction(e -> {
             Slarray.add(new Label("skill"));
             Starray.add(new TextField());
-            Sinfo.add(Slarray.get(Slarray.size()-1),0,Slarray.size());
-            Sinfo.add(Starray.get(Starray.size()-1),1,Starray.size());
+            Sinfo.add(Slarray.get(Slarray.size() - 1), 0, Slarray.size());
+            Sinfo.add(Starray.get(Starray.size() - 1), 1, Starray.size());
         });
 
         Sinfo.add(Sname, 0, 0);
@@ -661,12 +674,11 @@ public class Main extends Application {
         Label ECAlabel = new Label("Extra Curricular Activities");
         ECAlabel.setStyle("-fx-font-size: 30px");
         GridPane ECAinfo = new GridPane();
-        ArrayList<Label> ECAlarray=new ArrayList<>();
-        ArrayList<TextField> ECAtarray=new ArrayList<>();
+        ArrayList<Label> ECAlarray = new ArrayList<>();
+        ArrayList<TextField> ECAtarray = new ArrayList<>();
 
 
-
-        Button addECA=new Button("+");
+        Button addECA = new Button("+");
         Label ECAname = new Label("ECA Name:");
         TextField ECAnameinput = new TextField();
         ECAinfo.add(ECAname, 0, 0);
@@ -674,12 +686,11 @@ public class Main extends Application {
         ECAinfo.add(addECA, 2, 0);
 
 
-
-        addECA.setOnAction(e->{
+        addECA.setOnAction(e -> {
             ECAlarray.add(new Label("ECA name"));
             ECAtarray.add(new TextField());
-            ECAinfo.add(ECAlarray.get(ECAlarray.size()-1),0,ECAlarray.size());
-            ECAinfo.add(ECAtarray.get(ECAtarray.size()-1),1,ECAtarray.size());
+            ECAinfo.add(ECAlarray.get(ECAlarray.size() - 1), 0, ECAlarray.size());
+            ECAinfo.add(ECAtarray.get(ECAtarray.size() - 1), 1, ECAtarray.size());
         });
 
 
@@ -688,11 +699,17 @@ public class Main extends Application {
         HBox SECA = new HBox(skills, extracurricular);
         SECA.setAlignment(Pos.TOP_LEFT);
         SECA.setSpacing(400);
-        BorderPane SECAfinal=new BorderPane();
-        HBox SECAbottom=new HBox();
-        Button SECAnext=new Button("Next");SECAnext.setOnAction(e->{primaryStage.setScene(sc);});
-        Button SECAback=new Button("Back");SECAback.setOnAction(e->{primaryStage.setScene(scene3);});
-        SECAbottom.getChildren().addAll(SECAback,SECAnext);
+        BorderPane SECAfinal = new BorderPane();
+        HBox SECAbottom = new HBox();
+        Button SECAnext = new Button("Next");
+        SECAnext.setOnAction(e -> {
+            primaryStage.setScene(sc);
+        });
+        Button SECAback = new Button("Back");
+        SECAback.setOnAction(e -> {
+            primaryStage.setScene(scene3);
+        });
+        SECAbottom.getChildren().addAll(SECAback, SECAnext);
         SECAbottom.setAlignment(Pos.BASELINE_RIGHT);
         SECAfinal.setCenter(SECA);
         SECAfinal.setBottom(SECAbottom);
@@ -701,7 +718,7 @@ public class Main extends Application {
 
 //Button Actions on Onlogin Page
         B1.setOnAction(e -> {
-            try{
+            try {
                 String fetchSQL = "Select * from personaldetails where UID = " + U_id;
                 ResultSet rs = stmt.executeQuery(fetchSQL);
                 rs.absolute(1);
@@ -728,7 +745,7 @@ public class Main extends Application {
                 Gfoccupationinput.setText(rs.getString(6));
                 Gmoccupationinput.setText(rs.getString(7));
 
-            }catch(SQLException exception){
+            } catch (SQLException exception) {
                 exception.getStackTrace();
             }
             primaryStage.setScene(scene1);
@@ -761,29 +778,29 @@ public class Main extends Application {
             String p1 = pass1.getText();
             String p2 = pass2.getText();
 
-            try{
+            try {
                 if (email.contains("@gmail.com")) {
-                   if (p1.length() > 0 && p2.length() > 0) {
+                    if (p1.length() > 0 && p2.length() > 0) {
 
                         if (p1.equals(p2)) {
                             String sql2 = "select username from credentials";
                             ResultSet rs = stmt.executeQuery(sql2);
-                            boolean profileCheck =TRUE;
+                            boolean profileCheck = TRUE;
 
                             //while to check if user already registered
-                            while(profileCheck && rs.next()){
-                                if(rs.getString("username").equals(email))
+                            while (profileCheck && rs.next()) {
+                                if (rs.getString("username").equals(email))
                                     profileCheck = FALSE;
                             }
 
                             //if not registered then
-                            if(profileCheck){
+                            if (profileCheck) {
                                 String sql1 = "Insert into credentials(username,password) values('" + email + "','" + p1 + "')";
                                 System.out.println(sql1);
                                 stmt.executeUpdate(sql1);
                                 primaryStage.setScene(login);
                                 Smsg.setText("");
-                            }else {
+                            } else {
                                 Smsg.setText("email already registered");
                                 System.out.println("user already registered");
                             }
@@ -800,7 +817,7 @@ public class Main extends Application {
                     Smsg.setText("invalid email");
                     System.out.println("Please enter a valid email");
                 }
-            }catch (SQLException a){
+            } catch (SQLException a) {
                 a.printStackTrace();
             }
 
@@ -813,8 +830,8 @@ public class Main extends Application {
                 ResultSet rs = stmt.executeQuery("select * from credentials where username = '" + email + "'");
 
                 boolean checkuser = FALSE;
-                while(rs.next()){
-                    if(rs.getString("username").equals(email)){
+                while (rs.next()) {
+                    if (rs.getString("username").equals(email)) {
                         U_id = rs.getInt(1);
                         System.out.println("userID: " + U_id);
                         checkuser = TRUE;
@@ -822,26 +839,26 @@ public class Main extends Application {
                     }
                 }
                 rs.absolute(1);
-                if(checkuser && rs.getString("password").equals(pass)){
+                if (checkuser && rs.getString("password").equals(pass)) {
                     primaryStage.setScene(sc);
                     Lmsg.setText("");
-                }else if(checkuser && !rs.getString("password").equals(pass)){
+                } else if (checkuser && !rs.getString("password").equals(pass)) {
                     Lmsg.setText("Incorrect password");
                     System.out.println("Incorrect password");
-                }else {
+                } else {
                     Lmsg.setText("Signup first!");
                     System.out.println("User not registered");
                 }
 
-            }catch(SQLException exception){
+            } catch (SQLException exception) {
                 exception.printStackTrace();
             }
 
         });
 
 
-        PIsave.setOnAction(e->{
-            try{
+        PIsave.setOnAction(e -> {
+            try {
                 String UAsql = "Update personaldetails set fName = '"
                         + AFnameinput.getText() + "' ,lName= '"
                         + ALnameinput.getText() + "' ,DOB="
@@ -857,26 +874,52 @@ public class Main extends Application {
                         + LCountryinput.getText() + "' where UID = " + U_id;
 
                 String UGsql = "Update guardiandetails set fatherName = '"
-                        +Gfnameinput.getText() + "', motherName ='"
-                        +Gmnameinput.getText() + "', fatherNumber ="
-                        +Gfnumberinput.getText() + ", motherNumber = "
-                        +Gmnumberinput.getText() + ", fatherOcc = '"
-                        +Gfoccupationinput.getText() + "', motherOcc = '"
-                        +Gmoccupationinput.getText() + "' where UID = " + U_id;
+                        + Gfnameinput.getText() + "', motherName ='"
+                        + Gmnameinput.getText() + "', fatherNumber ="
+                        + Gfnumberinput.getText() + ", motherNumber = "
+                        + Gmnumberinput.getText() + ", fatherOcc = '"
+                        + Gfoccupationinput.getText() + "', motherOcc = '"
+                        + Gmoccupationinput.getText() + "' where UID = " + U_id;
 
                 stmt.executeUpdate(UAsql);
                 System.out.println("Changes saved");
                 stmt.executeUpdate(UGsql);
                 System.out.println("Changes saved");
-            }catch(SQLException exception){
+            } catch (SQLException exception) {
                 exception.printStackTrace();
             }
         });
 
 
+        //yaha mai company wala scene bana raha hun
+
+        BorderPane comPane = new BorderPane();
+        Scene comScene = new Scene(comPane,0.9*r.getWidth(),0.9*r.getHeight());
+
+        TilePane left = new TilePane(Orientation.VERTICAL);
+        left.setPrefWidth(0.2*comScene.getWidth());
+        left.setStyle("-fx-border-color: black");
+        Button createJP = new Button("Create Job");
+        Button showProfiles = new Button("Profiles");
+        left.setAlignment(Pos.CENTER);
+        left.getChildren().addAll(createJP,showProfiles);
+
+        Pane top = new Pane();
+        Label welcome = new Label("Welcome");
+        top.getChildren().addAll(welcome);
+        top.setPrefHeight(0.125*comScene.getHeight());
+        welcome.translateXProperty().bind(top.widthProperty().divide(2));
+        welcome.translateYProperty().bind(top.heightProperty().divide(2));
+        welcome.setFont(Font.font("Times New Roman",FontWeight.BOLD,40));
+        top.setStyle("-fx-border-color: black");
+
+
+        comPane.setTop(top);
+        comPane.setLeft(left);
+
 
         primaryStage.setTitle("CV Builder");
-        primaryStage.setScene(login);
+        primaryStage.setScene(comScene);
         primaryStage.show();
 
     }

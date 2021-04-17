@@ -1,13 +1,11 @@
 package sample;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class database {
-    private static String username = "root";
-    private static String password = "Amit@123";
-    private static String database = "profile";
+    private static final String username = "root";
+    private static final String password = "Amit@123";
+    private static final String database = "profiles";
 
     public static Connection main(){
         try{
