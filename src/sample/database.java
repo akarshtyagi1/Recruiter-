@@ -7,7 +7,7 @@ import java.sql.Statement;
 public class database {
     private static String username = "root";
     private static String password = "Amit@123";
-    private static String database = "profiles";
+    private static String database = "profile";
 
     public static Connection main(){
         try{

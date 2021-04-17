@@ -21,10 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import static java.lang.Boolean.FALSE;
@@ -38,7 +35,7 @@ public class Main extends Application {
     static String username;
     static int U_id;
     private static database myserver = new database();
-    private static Connection conn = myserver.main();
+    private static final Connection conn = myserver.main();
 
     public static void main(String[] args) {
         launch(args);
@@ -243,8 +240,12 @@ public class Main extends Application {
         Alabel.setStyle("-fx-font-size: 30px");
         GridPane Ainfo = new GridPane();
 
-        Label Aname = new Label("Name");
-        TextField Anameinput = new TextField();
+        Label AFname = new Label("First Name: ");
+        TextField AFnameinput = new TextField();
+        AFnameinput.setPromptText("FirstName");
+        Label ALname = new Label("Last Name: ");
+        TextField ALnameinput = new TextField();
+        ALnameinput.setPromptText("LastName");
         Label ADOB = new Label("Date of birth");
         TextField ADOBinput = new TextField();
         Label Agender = new Label("Gender");
@@ -252,14 +253,16 @@ public class Main extends Application {
         Label Acategory = new Label("Category");
         TextField Acategoryinput = new TextField();
 
-        Ainfo.add(Aname, 0, 0);
-        Ainfo.add(Anameinput, 1, 0);
-        Ainfo.add(ADOB, 0, 1);
-        Ainfo.add(ADOBinput, 1, 1);
-        Ainfo.add(Agender, 0, 2);
-        Ainfo.add(Agenderinput, 1, 2);
-        Ainfo.add(Acategory, 0, 3);
-        Ainfo.add(Acategoryinput, 1, 3);
+        Ainfo.add(AFname, 0, 0);
+        Ainfo.add(AFnameinput, 1, 0);
+        Ainfo.add(ALname, 0, 1);
+        Ainfo.add(ALnameinput, 1, 1);
+        Ainfo.add(ADOB, 0, 2);
+        Ainfo.add(ADOBinput, 1, 2);
+        Ainfo.add(Agender, 0, 3);
+        Ainfo.add(Agenderinput, 1, 3);
+        Ainfo.add(Acategory, 0, 4);
+        Ainfo.add(Acategoryinput, 1, 4);
 
         about.getChildren().addAll(Alabel, Ainfo);
 
@@ -272,17 +275,14 @@ public class Main extends Application {
 
         Label CDmobile = new Label("Mobile No.");
         TextField CDmobileinput = new TextField();
-        Label CDemail = new Label("Email adress");
+        Label CDemail = new Label("Email: ");
         TextField CDemailinput = new TextField();
-        Label CDlin = new Label("LinkedIn profile");
-        TextField CDlininput = new TextField();
+
 
         CDinfo.add(CDmobile, 0, 0);
         CDinfo.add(CDmobileinput, 1, 0);
         CDinfo.add(CDemail, 0, 1);
         CDinfo.add(CDemailinput, 1, 1);
-        CDinfo.add(CDlin, 0, 2);
-        CDinfo.add(CDlininput, 1, 2);
         contact.getChildren().addAll(CDlabel, CDinfo);
 
         //Location
@@ -291,24 +291,27 @@ public class Main extends Application {
         Llabel.setStyle("-fx-font-size: 30px");
         GridPane Linfo = new GridPane();
 
-        Label LCountry = new Label("Country");
-        TextField Lcountryinput = new TextField();
-        Label Lstate = new Label("Date of birth");
-        TextField Lstateinput = new TextField();
-        Label Lpincode = new Label("Pin code");
-        TextField Lpincodeinput = new TextField();
-        Label Lhouse = new Label("House Adress");
+        Label Lhouse = new Label("H.No: ");
         TextField Lhouseinput = new TextField();
+        Label LStreet = new Label("Street: ");
+        TextField LStreetInput = new TextField();
+        Label LCity = new Label("City: ");
+        TextField LCityInput = new TextField();
+        Label Lpincode = new Label("Pin code: ");
+        TextField Lpincodeinput = new TextField();
+        Label LCountry = new Label("Country: ");
+        TextField LCountryinput = new TextField();
 
-        Linfo.add(LCountry, 0, 0);
-        Linfo.add(Lcountryinput, 1, 0);
-        Linfo.add(Lstate, 0, 1);
-        Linfo.add(Lstateinput, 1, 1);
-        Linfo.add(Lpincode, 0, 2);
-        Linfo.add(Lpincodeinput, 1, 2);
-        Linfo.add(Lhouse, 0, 3);
-        Linfo.add(Lhouseinput, 1, 3);
-
+        Linfo.add(Lhouse, 0, 0);
+        Linfo.add(Lhouseinput, 1, 0);
+        Linfo.add(LStreet, 0, 1);
+        Linfo.add(LStreetInput, 1, 1);
+        Linfo.add(LCity, 0, 2);
+        Linfo.add(LCityInput, 1, 2);
+        Linfo.add(Lpincode, 0, 3);
+        Linfo.add(Lpincodeinput, 1, 3);
+        Linfo.add(LCountry, 0, 4);
+        Linfo.add(LCountryinput, 1, 4);
         location.getChildren().addAll(Llabel, Linfo);
 
 
@@ -331,7 +334,6 @@ public class Main extends Application {
         Label Gmoccupation = new Label("Mother's Occupation");
         TextField Gmoccupationinput = new TextField();
 
-
         Ginfo.add(Gfname, 0, 0);
         Ginfo.add(Gfnameinput, 1, 0);
         Ginfo.add(Gmname, 0, 1);
@@ -346,33 +348,39 @@ public class Main extends Application {
         Ginfo.add(Gmoccupationinput, 1, 5);
         guardian.getChildren().addAll(Glabel, Ginfo);
 
+
         VBox PIleft = new VBox();
+        PIleft.setPadding(new Insets(10));
         PIleft.getChildren().addAll(about, contact, location);
+
         VBox PIright = new VBox();
         PIright.getChildren().addAll(guardian);
+
         HBox PI = new HBox(PIleft, PIright);
-        PI.setAlignment(Pos.TOP_LEFT);
+        PI.setAlignment(Pos.CENTER);
+        //PI.setAlignment(Pos.TOP_LEFT);
         PI.setSpacing(400);
         BorderPane PIfinal=new BorderPane();
+
+
         HBox PIbottom=new HBox();
         Button PInext=new Button("Next");PInext.setOnAction(e->{primaryStage.setScene(scene2);});
         Button PIback=new Button("Back");PIback.setOnAction(e->{primaryStage.setScene(sc);});
         Button PIsave=new Button("Save changes");
+
         PIbottom.getChildren().addAll(PIback,PInext,PIsave);
         PIbottom.setAlignment(Pos.BASELINE_RIGHT);
+
         PIfinal.setCenter(PI);
         PIfinal.setBottom(PIbottom);
         scene1 = new Scene(PIfinal, 0.90 * r.getWidth(), 0.90 * r.getHeight());
 
 
-        //about.setAlignment(Pos.CENTER);
 
-                /*Button Br1=new Button();
-        Br1.setText("back");
-        Br1.setOnAction(e->{
-            window.setScene(sc);
-        });
-*/
+
+
+
+
 //Scene of Education and Work Experience information
         //College
         VBox university = new VBox();
@@ -697,12 +705,29 @@ public class Main extends Application {
                 String fetchSQL = "Select * from personaldetails where UID = " + U_id;
                 ResultSet rs = stmt.executeQuery(fetchSQL);
                 rs.absolute(1);
-                Anameinput.setText(rs.getString(2)+" "+rs.getString(3));
+                AFnameinput.setText(rs.getString(2));
+                ALnameinput.setText(rs.getString(3));
                 ADOBinput.setText(rs.getString("DOB"));
-                Agender.setText(rs.getString("gender"));
+                Agenderinput.setText(rs.getString("gender"));
                 Acategoryinput.setText(rs.getString("category"));
                 CDemailinput.setText(rs.getString("email"));
                 CDmobileinput.setText(rs.getString("mobile"));
+                Lhouseinput.setText(rs.getString("HNO"));
+                LStreetInput.setText(rs.getString("Street"));
+                LCityInput.setText(rs.getString("city"));
+                LCountryinput.setText(rs.getString("country"));
+                Lpincodeinput.setText(rs.getString("pincode"));
+
+                fetchSQL = "Select * from guardiandetails where UID = " + U_id;
+                rs = stmt.executeQuery(fetchSQL);
+                rs.absolute(1);
+                Gfnameinput.setText(rs.getString(2));
+                Gmnameinput.setText(rs.getString(3));
+                Gfnumberinput.setText(rs.getString(4));
+                Gmnumberinput.setText(rs.getString(5));
+                Gfoccupationinput.setText(rs.getString(6));
+                Gmoccupationinput.setText(rs.getString(7));
+
             }catch(SQLException exception){
                 exception.getStackTrace();
             }
@@ -815,7 +840,40 @@ public class Main extends Application {
         });
 
 
-        PIsave.setOnAction(e->{});
+        PIsave.setOnAction(e->{
+            try{
+                String UAsql = "Update personaldetails set fName = '"
+                        + AFnameinput.getText() + "' ,lName= '"
+                        + ALnameinput.getText() + "' ,DOB="
+                        + ADOBinput.getText() + " ,email= '"
+                        + CDemailinput.getText() + "' ,category = '"
+                        + Acategoryinput.getText() + "' ,gender = '"
+                        + Agenderinput.getText() + "' ,mobile="
+                        + CDmobileinput.getText() + ", HNO ="
+                        + Lhouseinput.getText() + " ,Street='"
+                        + LStreetInput.getText() + "' ,city='"
+                        + LCityInput.getText() + "', pincode = "
+                        + Lpincodeinput.getText() + ", country = '"
+                        + LCountryinput.getText() + "' where UID = " + U_id;
+
+                String UGsql = "Update guardiandetails set fatherName = '"
+                        +Gfnameinput.getText() + "', motherName ='"
+                        +Gmnameinput.getText() + "', fatherNumber ="
+                        +Gfnumberinput.getText() + ", motherNumber = "
+                        +Gmnumberinput.getText() + ", fatherOcc = '"
+                        +Gfoccupationinput.getText() + "', motherOcc = '"
+                        +Gmoccupationinput.getText() + "' where UID = " + U_id;
+
+                stmt.executeUpdate(UAsql);
+                System.out.println("Changes saved");
+                stmt.executeUpdate(UGsql);
+                System.out.println("Changes saved");
+            }catch(SQLException exception){
+                exception.printStackTrace();
+            }
+        });
+
+
 
         primaryStage.setTitle("CV Builder");
         primaryStage.setScene(login);
