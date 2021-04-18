@@ -17,10 +17,9 @@ import javafx.stage.Stage;
 
 import javax.xml.transform.Result;
 import java.io.FileInputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import static java.lang.Boolean.FALSE;
@@ -1281,7 +1280,26 @@ public class Main extends Application {
         EEsave.setOnAction(e -> {
             try {
                 int ndegree = Ularray1.size();
-                int count=0;
+                String sqlHS = "Select * from education where degree = ? and UID = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sqlHS);
+                pstmt.setString(1,"10th");
+                pstmt.setInt(2,U_id);
+                ResultSet Srs = pstmt.executeQuery();
+                if(Srs.next()){
+                    if(TEpercentageinput.getText().length()>0){
+                        try {
+                            String sqlTE = "update education set institution = "
+                                    + TEschoolinput.getText().trim() + "',board='"
+                                    + TEboardinput.getText().trim() + "', percentage="
+                                    + TEpercentageinput.getText().trim() + ",passyear = "
+                                    + TEyearinput.getText().trim();
+                            stmt.executeUpdate(sqlTE);
+                        } catch (SQLException webException) {
+                            System.out.println("no need to update");
+                        }
+                    }
+                }
+
                 
                     for (int i = 0; i < ndegree; i++) {
                         String Ins = Utarray2.get(i).getText().trim();
@@ -1309,7 +1327,11 @@ public class Main extends Application {
                                         + board+ "',"
                                         + perc + ",'"
                                         + year+ "')";
-                                stmt.executeUpdate(Insql);
+                                try{
+                                    stmt.executeUpdate(Insql);
+                                }catch(SQLException exception){
+                                    System.out.println("No Update required");
+                                }
                                 System.out.println(Insql);
                                 System.out.println("Inserted Successfully");
                             }
@@ -1322,7 +1344,11 @@ public class Main extends Application {
                                         + perc + ", passyear = '"
                                         + year + "' where UID = " + U_id + " and degree not in ('12th' , '10th')";
                                 System.out.println(pdSQL);
-                                stmt.executeUpdate(pdSQL);
+                                try{
+                                    stmt.executeUpdate(pdSQL);
+                                }catch(SQLException exception){
+                                    System.out.println("No Update required");
+                                }
                                 System.out.println(pdSQL);
                                 System.out.println("Updated");
                             }
