@@ -1033,8 +1033,8 @@ public class Main extends Application {
                         Uinfo.add(Ularray5.get(Ularray5.size() - 1), 0, (Ularray5.size() - 1) * 5 + 4);
                         Uinfo.add(Utarray5.get(Utarray5.size() - 1), 1, (Utarray5.size() - 1) * 5 + 4);
 
-                        Utarray1.get(count).setText(HSrs.getString(2));
-                        Utarray2.get(count).setText(HSrs.getString(3));
+                        Utarray2.get(count).setText(HSrs.getString(2));
+                        Utarray1.get(count).setText(HSrs.getString(3));
                         Utarray3.get(count).setText(HSrs.getString(4));
                         Utarray4.get(count).setText(HSrs.getString(5));
                         Utarray5.get(count).setText(HSrs.getString(6));
@@ -1282,47 +1282,55 @@ public class Main extends Application {
             try {
                 int ndegree = Ularray1.size();
                 int count=0;
-                String fRS = "Select * from education where UID = " + U_id + " and degree not in('12th','10th')";
-                ResultSet rs = stmt.executeQuery(fRS);
+                
+                    for (int i = 0; i < ndegree; i++) {
+                        String Ins = Utarray2.get(i).getText().trim();
+                        String degree = Utarray1.get(i).getText().trim();
+                        String board = Utarray3.get(i).getText().trim();
+                        String perc = Utarray4.get(i).getText().trim();
+                        String year = Utarray5.get(i).getText().trim();
 
-                for(int i=0;i<ndegree;i++){
-                    Boolean status = FALSE;//new entry
-
-                    if(Utarray1.get(i).getText().length()>0){
-                        while (rs.next() && !status) {
-                            if (rs.getString(3).equals(Utarray1.get(i))) {
-                                status = TRUE;
-                                break;
+                        String fRS = "Select * from education where UID = " + U_id + " and degree = '" + degree + "'";
+                        ResultSet rs = stmt.executeQuery(fRS);
+                        System.out.println(degree);
+                        if(perc.length() > 0 && degree.length()>0){
+                            Boolean status = FALSE;//new entry
+                            while (rs.next()){
+                                if(rs.getString(3).equals(degree)){
+                                    status = TRUE;
+                                }
                             }
+
+                            if (!status) {
+                                String Insql = "insert into education values("
+                                        + U_id + ",'"
+                                        + Ins+ "','"
+                                        + degree + "','"
+                                        + board+ "',"
+                                        + perc + ",'"
+                                        + year+ "')";
+                                stmt.executeUpdate(Insql);
+                                System.out.println(Insql);
+                                System.out.println("Inserted Successfully");
+                            }
+
+                            else if (status) {
+                                String pdSQL = "update education set degree = '"
+                                        + degree + "' ,institution = '"
+                                        + Ins + "' ,Board = '"
+                                        + board + "' ,percentage = "
+                                        + perc + ", passyear = '"
+                                        + year + "' where UID = " + U_id + " and degree not in ('12th' , '10th')";
+                                System.out.println(pdSQL);
+                                stmt.executeUpdate(pdSQL);
+                                System.out.println(pdSQL);
+                                System.out.println("Updated");
+                            }
+                        }else{
+                            System.out.println("Incomplete details");
                         }
-                    }else{
-                        System.out.println("Degree cant be empty");
-                    }
-
-                    if(!status && Utarray1.get(i).getText().length()>0){
-                        String Insql = "insert into education values("
-                                + U_id + ",'"
-                                + Ularray2.get(i) + "','"
-                                + Utarray1.get(i) + "','"
-                                + Utarray3.get(i) + "',"
-                                + Utarray4.get(i) + ",'"
-                                + Utarray5.get(i) + "')";
-                        stmt.executeQuery(Insql);
-                        System.out.println("Inserted Successfully");}
-//                    }else if(){
-//
-//                    }
                 }
 
-                while (ndegree != count) {
-                    String pdSQL = "update education set degree = '"
-                            +Utarray1.get(count) + "' ,institution = '"
-                            +Utarray2.get(count) + "' ,Board = '"
-                            +Utarray3.get(count) + "' ,percentage = "
-                            +Utarray4.get(count) + ", passyear = '"
-                            +Utarray5.get(count) + "' where UID = " + U_id;
-                    stmt.executeUpdate(pdSQL);
-                }
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
