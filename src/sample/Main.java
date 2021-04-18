@@ -72,10 +72,12 @@ public class Main extends Application {
 
         Button bLogin = new Button("Login");
         Button bSignUp = new Button("SignUp");
+        HBox h13 =new HBox();h13.getChildren().addAll(bLogin,bSignUp);h13.setSpacing(10);h13.setAlignment(Pos.CENTER);
 
         hb12.setAlignment(Pos.CENTER);
         hb11.getChildren().addAll(imageView1);
-        hb12.getChildren().addAll(heading1, luser, username, lpass, password,Lmsg, bSignUp, bLogin);
+        hb12.getChildren().addAll(heading1, luser, username, lpass, password,Lmsg, h13);
+        hb12.setSpacing(2.5);
         cPane1.getChildren().addAll(hb11, hb12);
         pane1.getChildren().addAll(cPane1);
 
@@ -121,12 +123,15 @@ public class Main extends Application {
         PasswordField pass2 = new PasswordField();
         pass2.setPromptText("Confirm Password");
         Button bRegister = new Button("Register");
+        Button bback = new Button("Back to SignIn");bback.setOnAction(e->{primaryStage.setScene(login);});
+        HBox h23 =new HBox();h23.getChildren().addAll(bRegister,bback);h23.setSpacing(10);
         Label Smsg = new Label("");
         Smsg.setTextFill(Color.RED);
 
         hb22.setAlignment(Pos.CENTER);
         hb21.getChildren().addAll(imageView2);
-        hb22.getChildren().addAll(heading2, Lemail, Temail, LPassword, pass1, LcPassword, pass2,Smsg, bRegister);
+        hb22.getChildren().addAll(heading2, Lemail, Temail, LPassword, pass1, LcPassword, pass2,Smsg, h23);
+        hb22.setSpacing(2.5);
         cPane2.getChildren().addAll(hb21, hb22);
         pane2.getChildren().addAll(cPane2);
 
@@ -152,22 +157,34 @@ public class Main extends Application {
         Background background = new Background(backgroundimage);
         root.setBackground(background);
 
+//logout button
+        FileInputStream inputlogout = new FileInputStream("Resources/logout.png");
+        Image ilo = new Image(inputlogout);
+        ImageView imlo = new ImageView(ilo);
+        imlo.setFitWidth(25);
+        imlo.setFitHeight(25);
+        Button logout=new Button();logout.setOnAction(e->{primaryStage.setScene(login);});
+        logout.setGraphic(imlo);
+        root.setRight(logout);
+
 
         GridPane info = new GridPane();
-        info.setMaxHeight(r.getHeight() * 0.5);
-        info.setMaxWidth(r.getWidth() * 0.7);
-        info.setStyle("-fx-background-color: #FFFFFF;");
+        info.setMaxHeight(r.getHeight() * 0.75);
+        info.setMaxWidth(r.getWidth() * 0.50);
+        info.setStyle("-fx-background-color: transparent;");
         info.setAlignment(Pos.CENTER);
-        info.setHgap(20);
+        info.setHgap(10);
         info.setVgap(10);
-        info.setGridLinesVisible(TRUE);
+        //info.setGridLinesVisible(TRUE);
+
+
 
 //personal information
         FileInputStream input1 = new FileInputStream("Resources/personal.png");
         Image i1 = new Image(input1);
         ImageView im1 = new ImageView(i1);
-        im1.setFitWidth(100);
-        im1.setFitHeight(100);
+        im1.setFitWidth(150);
+        im1.setFitHeight(150);
         Button B1 = new Button();
         B1.setText("Personal Informtion");
         VBox v1 = new VBox();
@@ -177,8 +194,8 @@ public class Main extends Application {
         FileInputStream input2 = new FileInputStream("Resources/education.png");
         Image i2 = new Image(input2);
         ImageView im2 = new ImageView(i2);
-        im2.setFitWidth(100);
-        im2.setFitHeight(100);
+        im2.setFitWidth(150);
+        im2.setFitHeight(150);
         Button B2 = new Button();
         B2.setText("Education");
         VBox v2 = new VBox();
@@ -187,8 +204,8 @@ public class Main extends Application {
         FileInputStream input3 = new FileInputStream("Resources/education.png");
         Image i3 = new Image(input3);
         ImageView im3 = new ImageView(i3);
-        im3.setFitWidth(100);
-        im3.setFitHeight(100);
+        im3.setFitWidth(150);
+        im3.setFitHeight(150);
         Button B3 = new Button();
         B3.setText("Work experience");
         VBox v3 = new VBox();
@@ -198,10 +215,10 @@ public class Main extends Application {
         FileInputStream input4 = new FileInputStream("Resources/experience.png");
         Image i4 = new Image(input4);
         ImageView im4 = new ImageView(i4);
-        im4.setFitWidth(100);
-        im4.setFitHeight(100);
+        im4.setFitWidth(150);
+        im4.setFitHeight(150);
         Button B4 = new Button();
-        B4.setText("Projects and Positions of Responsibilities");
+        B4.setText("Projects and Positions\n of Responsibilities");
         VBox v4 = new VBox();
         v4.getChildren().addAll(im4, B4);
 
@@ -210,10 +227,10 @@ public class Main extends Application {
         FileInputStream input5 = new FileInputStream("Resources/experience.png");
         Image i5 = new Image(input5);
         ImageView im5 = new ImageView(i5);
-        im5.setFitWidth(100);
-        im5.setFitHeight(100);
+        im5.setFitWidth(150);
+        im5.setFitHeight(150);
         Button B5 = new Button();
-        B5.setText("Skills and Extra Curricular Activities");
+        B5.setText("Skills and Extra\nCurricular Activities");
         VBox v5 = new VBox();
         v5.getChildren().addAll(im5, B5);
 
@@ -372,9 +389,11 @@ public class Main extends Application {
 
         PIbottom.getChildren().addAll(PIback,PInext,PIsave);
         PIbottom.setAlignment(Pos.BASELINE_RIGHT);
+        PIbottom.setBackground(new Background(new BackgroundFill(Color.rgb(23,148,23), CornerRadii.EMPTY, Insets.EMPTY)));
 
         PIfinal.setCenter(PI);
         PIfinal.setBottom(PIbottom);
+        PIfinal.setBackground(new Background(new BackgroundFill(Color.rgb(157,200,141), CornerRadii.EMPTY, Insets.EMPTY)));
         scene1 = new Scene(PIfinal, 0.90 * r.getWidth(), 0.90 * r.getHeight());
 
 
@@ -499,7 +518,9 @@ public class Main extends Application {
         HBox EEbottom=new HBox();
         Button EEnext=new Button("Next");EEnext.setOnAction(e->{primaryStage.setScene(scene3);});
         Button EEback=new Button("Back");EEback.setOnAction(e->{primaryStage.setScene(scene1);});
-        EEbottom.getChildren().addAll(EEback,EEnext);
+        Button EEsave=new Button("Save changes");
+
+        EEbottom.getChildren().addAll(EEback,EEnext,EEsave);
         EEbottom.setAlignment(Pos.BASELINE_RIGHT);
         EEfinal.setCenter(EE);
         EEfinal.setBottom(EEbottom);
@@ -628,7 +649,8 @@ public class Main extends Application {
         HBox EXbottom=new HBox();
         Button EXnext=new Button("Next");EXnext.setOnAction(e->{primaryStage.setScene(scene4);});
         Button EXback=new Button("Back");EXback.setOnAction(e->{primaryStage.setScene(scene2);});
-        EXbottom.getChildren().addAll(EXback,EXnext);
+        Button EXsave=new Button("Save changes");
+        EXbottom.getChildren().addAll(EXback,EXnext,EXsave);
         EXbottom.setAlignment(Pos.BASELINE_RIGHT);
         EXfinal.setCenter(EX);
         EXfinal.setBottom(EXbottom);
@@ -676,8 +698,8 @@ public class Main extends Application {
             Pinfo.add(Ptarray2.get(Ptarray2.size()-1),1,(Ptarray2.size()-1)*4+1);
             Pinfo.add(Plarray3.get(Plarray3.size()-1),0,(Plarray3.size()-1)*4+2);
             Pinfo.add(Ptarray3.get(Ptarray3.size()-1),1,(Ptarray3.size()-1)*4+2);
-            Pinfo.add(Plarray4.get(Plarray4.size()-1),0,(Plarray4.size()-1)*4+2);
-            Pinfo.add(Ptarray4.get(Ptarray4.size()-1),1,(Ptarray4.size()-1)*4+2);
+            Pinfo.add(Plarray4.get(Plarray4.size()-1),0,(Plarray4.size()-1)*4+3);
+            Pinfo.add(Ptarray4.get(Ptarray4.size()-1),1,(Ptarray4.size()-1)*4+3);
         });
 
 
@@ -714,10 +736,10 @@ public class Main extends Application {
 
             PRinfo.add(PRlarray1.get(PRlarray1.size()-1),0,(PRlarray1.size()-1)*3);
             PRinfo.add(PRtarray1.get(PRtarray1.size()-1),1,(PRtarray1.size()-1)*3);
-            PRinfo.add(PRlarray2.get(PRlarray2.size()-1),0,(PRlarray1.size()*3-1)+1);
-            PRinfo.add(PRtarray2.get(PRtarray2.size()-1),1,(PRtarray1.size()*3-1)+1);
-            PRinfo.add(PRlarray3.get(PRlarray3.size()-1),0,(PRlarray1.size()*3-1)+2);
-            PRinfo.add(PRtarray3.get(PRtarray3.size()-1),1,(PRtarray1.size()*3-1)+2);
+            PRinfo.add(PRlarray2.get(PRlarray2.size()-1),0,(PRlarray2.size()-1)*3+1);
+            PRinfo.add(PRtarray2.get(PRtarray2.size()-1),1,(PRtarray2.size()-1)*3+1);
+            PRinfo.add(PRlarray3.get(PRlarray3.size()-1),0,(PRlarray3.size()-1)*3+2);
+            PRinfo.add(PRtarray3.get(PRtarray3.size()-1),1,(PRtarray3.size()-1)*3+2);
         });
 
 
@@ -730,7 +752,8 @@ public class Main extends Application {
         HBox PPRbottom=new HBox();
         Button PPRnext=new Button("Next");PPRnext.setOnAction(e->{primaryStage.setScene(scene5);});
         Button PPRback=new Button("Back");PPRback.setOnAction(e->{primaryStage.setScene(scene3);});
-        PPRbottom.getChildren().addAll(PPRback,PPRnext);
+        Button PPRsave=new Button("Save changes");
+        PPRbottom.getChildren().addAll(PPRback,PPRnext,PPRsave);
         PPRbottom.setAlignment(Pos.BASELINE_RIGHT);
         PPRfinal.setCenter(PPR);
         PPRfinal.setBottom(PPRbottom);
@@ -756,8 +779,8 @@ public class Main extends Application {
         addskill.setOnAction(e->{
             Slarray1.add(new Label("skill"));
             Starray1.add(new TextField());
-            Slarray1.add(new Label("Proficiency"));
-            Starray1.add(new TextField());
+            Slarray2.add(new Label("Proficiency"));
+            Starray2.add(new TextField());
             Sinfo.add(Slarray1.get(Slarray1.size()-1),0,(Slarray1.size()-1)*2);
             Sinfo.add(Starray1.get(Starray1.size()-1),1,(Starray1.size()-1)*2);
             Sinfo.add(Slarray2.get(Slarray2.size()-1),0,(Slarray2.size()-1)*2+1);
@@ -786,8 +809,14 @@ public class Main extends Application {
             ECAtarray1.add(new TextField());
             ECAlarray2.add(new Label("ECA decription"));
             ECAtarray2.add(new TextArea());
-            ECAinfo.add(ECAlarray1.get(ECAlarray1.size()-1),0,ECAlarray1.size()-1);
-            ECAinfo.add(ECAtarray1.get(ECAtarray1.size()-1),1,ECAtarray1.size()-1);
+
+            ECAtarray2.get(ECAtarray2.size()-1).setPrefWidth(200);
+            ECAtarray2.get(ECAtarray2.size()-1).setPrefHeight(75);
+
+            ECAinfo.add(ECAlarray1.get(ECAlarray1.size()-1),0,(ECAlarray1.size()-1)*2);
+            ECAinfo.add(ECAtarray1.get(ECAtarray1.size()-1),1,(ECAtarray1.size()-1)*2);
+            ECAinfo.add(ECAlarray2.get(ECAlarray2.size()-1),0,(ECAlarray2.size()-1)*2+1);
+            ECAinfo.add(ECAtarray2.get(ECAtarray2.size()-1),1,(ECAtarray2.size()-1)*2+1);
         });
 
 
@@ -800,7 +829,8 @@ public class Main extends Application {
         HBox SECAbottom=new HBox();
         Button SECAnext=new Button("Next");SECAnext.setOnAction(e->{primaryStage.setScene(sc);});
         Button SECAback=new Button("Back");SECAback.setOnAction(e->{primaryStage.setScene(scene4);});
-        SECAbottom.getChildren().addAll(SECAback,SECAnext);
+        Button SECAsave=new Button("Save changes");
+        SECAbottom.getChildren().addAll(SECAback,SECAnext,SECAsave);
         SECAbottom.setAlignment(Pos.BASELINE_RIGHT);
         SECAfinal.setCenter(SECA);
         SECAfinal.setBottom(SECAbottom);
