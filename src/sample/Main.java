@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -163,7 +164,13 @@ public class Main extends Application {
         ImageView imlo = new ImageView(ilo);
         imlo.setFitWidth(25);
         imlo.setFitHeight(25);
-        Button logout=new Button();logout.setOnAction(e->{primaryStage.setScene(login);});
+        Button logout=new Button();
+        logout.setOnAction(e->{
+            username.setText("");
+            password.setText("");
+            primaryStage.setScene(login);
+        }
+            );
         logout.setGraphic(imlo);
         root.setRight(logout);
 
@@ -383,9 +390,10 @@ public class Main extends Application {
 
 
         HBox PIbottom=new HBox();
-        Button PInext=new Button("Next");PInext.setOnAction(e->{primaryStage.setScene(scene2);});
+        Button PInext=new Button("Next");
         Button PIback=new Button("Back");PIback.setOnAction(e->{primaryStage.setScene(sc);});
         Button PIsave=new Button("Save changes");
+
 
         PIbottom.getChildren().addAll(PIback,PInext,PIsave);
         PIbottom.setAlignment(Pos.BASELINE_RIGHT);
@@ -516,9 +524,11 @@ public class Main extends Application {
         EE.setSpacing(200);
         BorderPane EEfinal=new BorderPane();
         HBox EEbottom=new HBox();
-        Button EEnext=new Button("Next");EEnext.setOnAction(e->{primaryStage.setScene(scene3);});
-        Button EEback=new Button("Back");EEback.setOnAction(e->{primaryStage.setScene(scene1);});
+        Button EEnext=new Button("Next");
+        Button EEback=new Button("Back");
         Button EEsave=new Button("Save changes");
+
+
 
         EEbottom.getChildren().addAll(EEback,EEnext,EEsave);
         EEbottom.setAlignment(Pos.BASELINE_RIGHT);
@@ -647,8 +657,8 @@ public class Main extends Application {
         EX.setSpacing(400);
         BorderPane EXfinal=new BorderPane();
         HBox EXbottom=new HBox();
-        Button EXnext=new Button("Next");EXnext.setOnAction(e->{primaryStage.setScene(scene4);});
-        Button EXback=new Button("Back");EXback.setOnAction(e->{primaryStage.setScene(scene2);});
+        Button EXnext=new Button("Next");
+        Button EXback=new Button("Back");
         Button EXsave=new Button("Save changes");
         EXbottom.getChildren().addAll(EXback,EXnext,EXsave);
         EXbottom.setAlignment(Pos.BASELINE_RIGHT);
@@ -750,8 +760,8 @@ public class Main extends Application {
         PPR.setSpacing(400);
         BorderPane PPRfinal=new BorderPane();
         HBox PPRbottom=new HBox();
-        Button PPRnext=new Button("Next");PPRnext.setOnAction(e->{primaryStage.setScene(scene5);});
-        Button PPRback=new Button("Back");PPRback.setOnAction(e->{primaryStage.setScene(scene3);});
+        Button PPRnext=new Button("Next");
+        Button PPRback=new Button("Back");
         Button PPRsave=new Button("Save changes");
         PPRbottom.getChildren().addAll(PPRback,PPRnext,PPRsave);
         PPRbottom.setAlignment(Pos.BASELINE_RIGHT);
@@ -773,6 +783,7 @@ public class Main extends Application {
         ArrayList<TextField> Starray1=new ArrayList<>();
         ArrayList<Label> Slarray2=new ArrayList<>();
         ArrayList<TextField> Starray2=new ArrayList<>();
+
 
 
 
@@ -828,7 +839,7 @@ public class Main extends Application {
         BorderPane SECAfinal=new BorderPane();
         HBox SECAbottom=new HBox();
         Button SECAnext=new Button("Next");SECAnext.setOnAction(e->{primaryStage.setScene(sc);});
-        Button SECAback=new Button("Back");SECAback.setOnAction(e->{primaryStage.setScene(scene4);});
+        Button SECAback=new Button("Back");
         Button SECAsave=new Button("Save changes");
         SECAbottom.getChildren().addAll(SECAback,SECAnext,SECAsave);
         SECAbottom.setAlignment(Pos.BASELINE_RIGHT);
@@ -836,6 +847,10 @@ public class Main extends Application {
         SECAfinal.setBottom(SECAbottom);
 
         scene5 = new Scene(SECAfinal, 0.90 * r.getWidth(), 0.90 * r.getHeight());
+
+
+
+
 
 //Button Actions on Onlogin Page
         B1.setOnAction(e -> {
@@ -871,16 +886,321 @@ public class Main extends Application {
             }
             primaryStage.setScene(scene1);
         });
+
         B2.setOnAction(e -> {
-            primaryStage.setScene(scene2);
+            Ularray1.clear();
+            Ularray2.clear();
+            Ularray3.clear();
+            Ularray4.clear();
+            Ularray5.clear();
+            Utarray1.clear();
+            Utarray2.clear();
+            Utarray3.clear();
+            Utarray4.clear();
+            Utarray5.clear();
+            try{
+                String HSsql = "select * from education where UID = " + U_id + " and degree = '10th'";
+                String ICsql = "select * from education where UID = " + U_id + " and degree = '12th'";
+                String pdSQL = "select * from education where UID = " + U_id + " and degree not in ('12th','10th')";
+
+                ResultSet HSrs = stmt.executeQuery(HSsql);
+                if(HSrs.next()){
+                    TEschoolinput.setText(HSrs.getString("institution"));
+                    TEboardinput.setText(HSrs.getString("board"));
+                    TEpercentageinput.setText(HSrs.getString("percentage"));
+                    TEyearinput.setText(HSrs.getString("passyear"));
+                }
+
+                HSrs = stmt.executeQuery(ICsql);
+                if(HSrs.next()){
+                    TWschoolinput.setText(HSrs.getString("institution"));
+                    TWboardinput.setText(HSrs.getString("board"));
+                    TWpercentageinput.setText(HSrs.getString("percentage"));
+                    TWyearinput.setText(HSrs.getString("passyear"));
+                }
+                HSrs = stmt.executeQuery(pdSQL);
+                int count = 0;
+                while(HSrs.next()){
+                    Ularray1.add(new Label("Degree"));
+                    Utarray1.add(new TextField());
+                    Ularray2.add(new Label("Instituion "));
+                    Utarray2.add(new TextField());
+                    Ularray3.add(new Label("Board"));
+                    Utarray3.add(new TextField());
+                    Ularray4.add(new Label("CGPA/Percentage"));
+                    Utarray4.add(new TextField());
+                    Ularray5.add(new Label("Year Passed:"));
+                    Utarray5.add(new TextField());
+
+
+                    Uinfo.add(Ularray1.get(Ularray1.size()-1),0,(Ularray1.size()-1)*5);
+                    Uinfo.add(Utarray1.get(Utarray1.size()-1),1,(Utarray1.size()-1)*5);
+                    Uinfo.add(Ularray2.get(Ularray2.size()-1),0,(Ularray2.size()-1)*5+1);
+                    Uinfo.add(Utarray2.get(Utarray2.size()-1),1,(Utarray2.size()-1)*5+1);
+                    Uinfo.add(Ularray3.get(Ularray3.size()-1),0,(Ularray3.size()-1)*5+2);
+                    Uinfo.add(Utarray3.get(Utarray3.size()-1),1,(Utarray3.size()-1)*5+2);
+                    Uinfo.add(Ularray4.get(Ularray4.size()-1),0,(Ularray4.size()-1)*5+3);
+                    Uinfo.add(Utarray4.get(Utarray4.size()-1),1,(Utarray4.size()-1)*5+3);
+                    Uinfo.add(Ularray5.get(Ularray5.size()-1),0,(Ularray5.size()-1)*5+4);
+                    Uinfo.add(Utarray5.get(Utarray5.size()-1),1,(Utarray5.size()-1)*5+4);
+
+                    Utarray1.get(count).setText(HSrs.getString(2));
+                    Utarray2.get(count).setText(HSrs.getString(3));
+                    Utarray3.get(count).setText(HSrs.getString(4));
+                    Utarray4.get(count).setText(HSrs.getString(5));
+                    Utarray5.get(count).setText(HSrs.getString(6));
+                    count++;
+                }
+
+                primaryStage.setScene(scene2);
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
         });
         B3.setOnAction(e -> {
+            {
+                Clarray1.clear();
+                Clarray2.clear();
+                Clarray3.clear();
+                Clarray4.clear();
+                Clarray5.clear();
+                Ilarray1.clear();
+                Ilarray2.clear();
+                Ilarray3.clear();
+                Ilarray4.clear();
+                Ilarray5.clear();
+
+                Ctarray1.clear();
+                Ctarray2.clear();
+                Ctarray3.clear();
+                Ctarray4.clear();
+                Ctarray5.clear();
+                Itarray1.clear();
+                Itarray2.clear();
+                Itarray3.clear();
+                Itarray4.clear();
+                Itarray5.clear();
+            }
+
+            try{
+                String sqlCom = "select * from experience where jType = 'Regular'";
+                String sqlInt = "select * from experience where jType = 'Internship'";
+
+                ResultSet rs = stmt.executeQuery(sqlCom);
+                int countCom=0;
+                while(rs.next()){
+                    Clarray1.add(new Label("Company Name"));
+                    Ctarray1.add(new TextField());
+                    Clarray2.add(new Label("Position"));
+                    Ctarray2.add(new TextField());
+                    Clarray3.add(new Label("Period"));
+                    Ctarray3.add(new TextField());
+                    Clarray4.add(new Label("Salary"));
+                    Ctarray4.add(new TextField());
+                    Clarray5.add(new Label("Description :"));
+                    Ctarray5.add(new TextArea());
+
+                    Ctarray5.get(Ctarray5.size()-1).setPrefWidth(200);
+                    Ctarray5.get(Ctarray5.size()-1).setPrefHeight(75);
+
+                    Cinfo.add(Clarray1.get(Clarray1.size()-1),0,(Clarray1.size()-1)*5);
+                    Cinfo.add(Ctarray1.get(Ctarray1.size()-1),1,(Ctarray1.size()-1)*5);
+                    Cinfo.add(Clarray2.get(Clarray2.size()-1),0,(Clarray2.size()-1)*5+1);
+                    Cinfo.add(Ctarray2.get(Ctarray2.size()-1),1,(Ctarray2.size()-1)*5+1);
+                    Cinfo.add(Clarray3.get(Clarray3.size()-1),0,(Clarray3.size()-1)*5+2);
+                    Cinfo.add(Ctarray3.get(Ctarray3.size()-1),1,(Ctarray3.size()-1)*5+2);
+                    Cinfo.add(Clarray4.get(Clarray4.size()-1),0,(Clarray4.size()-1)*5+3);
+                    Cinfo.add(Ctarray4.get(Ctarray4.size()-1),1,(Ctarray4.size()-1)*5+3);
+                    Cinfo.add(Clarray5.get(Clarray5.size()-1),0,(Clarray5.size()-1)*5+4);
+                    Cinfo.add(Ctarray5.get(Ctarray5.size()-1),1,(Ctarray5.size()-1)*5+4);
+
+                    Ctarray1.get(countCom).setText(rs.getString(2));
+                    Ctarray2.get(countCom).setText(rs.getString(3));
+                    Ctarray3.get(countCom).setText(rs.getString(4));
+                    Ctarray4.get(countCom).setText(rs.getString(6));
+                    Ctarray5.get(countCom).setText(rs.getString(7));
+                    countCom++;
+                }
+
+                rs = stmt.executeQuery(sqlInt);
+                int countInt=0;
+                while(rs.next()){
+                    Ilarray1.add(new Label("Company Name"));
+                    Itarray1.add(new TextField());
+                    Ilarray2.add(new Label("Position"));
+                    Itarray2.add(new TextField());
+                    Ilarray3.add(new Label("Period"));
+                    Itarray3.add(new TextField());
+                    Ilarray4.add(new Label("Stipend"));
+                    Itarray4.add(new TextField());
+                    Ilarray5.add(new Label("Description :"));
+                    Itarray5.add(new TextArea());
+
+                    Itarray5.get(Itarray5.size()-1).setPrefWidth(200);
+                    Itarray5.get(Itarray5.size()-1).setPrefHeight(75);
+
+
+                    Iinfo.add(Ilarray1.get(Ilarray1.size()-1),0,(Ilarray1.size()-1)*5);
+                    Iinfo.add(Itarray1.get(Itarray1.size()-1),1,(Itarray1.size()-1)*5);
+                    Iinfo.add(Ilarray2.get(Ilarray2.size()-1),0,(Ilarray2.size()-1)*5+1);
+                    Iinfo.add(Itarray2.get(Itarray2.size()-1),1,(Itarray2.size()-1)*5+1);
+                    Iinfo.add(Ilarray3.get(Ilarray3.size()-1),0,(Ilarray3.size()-1)*5+2);
+                    Iinfo.add(Itarray3.get(Itarray3.size()-1),1,(Itarray3.size()-1)*5+2);
+                    Iinfo.add(Ilarray4.get(Ilarray4.size()-1),0,(Ilarray4.size()-1)*5+3);
+                    Iinfo.add(Itarray4.get(Itarray4.size()-1),1,(Itarray4.size()-1)*5+3);
+                    Iinfo.add(Ilarray5.get(Ilarray5.size()-1),0,(Ilarray5.size()-1)*5+4);
+                    Iinfo.add(Itarray5.get(Itarray5.size()-1),1,(Itarray5.size()-1)*5+4);
+
+                    Itarray1.get(countInt).setText(rs.getString(2));
+                    Itarray2.get(countInt).setText(rs.getString(3));
+                    Itarray3.get(countInt).setText(rs.getString(4));
+                    Itarray4.get(countInt).setText(rs.getString(6));
+                    Itarray5.get(countInt).setText(rs.getString(7));
+                    countInt++;
+                }
+
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+
             primaryStage.setScene(scene3);
         });
         B4.setOnAction(e -> {
+            {
+                Plarray1.clear();
+                Plarray2.clear();
+                Plarray3.clear();
+                Plarray4.clear();
+                Ptarray1.clear();
+                Ptarray2.clear();
+                Ptarray3.clear();
+                Ptarray4.clear();
+
+                PRlarray1.clear();
+                PRlarray2.clear();
+                PRlarray3.clear();
+                PRtarray1.clear();
+                PRtarray2.clear();
+                PRtarray3.clear();
+            }
+
+            try{
+                String sqlProj = "select * from projects";
+                String sqlPR = "select * from pos_resp";
+
+                ResultSet rs = stmt.executeQuery(sqlProj);
+                int countProj=0;
+                while (rs.next()){
+                    Plarray1.add(new Label("Project name"));
+                    Ptarray1.add(new TextField());
+                    Plarray2.add(new Label("Project Domain "));
+                    Ptarray2.add(new TextField());
+                    Plarray3.add(new Label("Company/Institution"));
+                    Ptarray3.add(new TextField());
+                    Plarray4.add(new Label("Description"));
+                    Ptarray4.add(new TextArea());
+
+                    Ptarray4.get(Ptarray4.size()-1).setPrefWidth(200);
+                    Ptarray4.get(Ptarray4.size()-1).setPrefHeight(75);
+
+                    Pinfo.add(Plarray1.get(Plarray1.size()-1),0,(Plarray1.size()-1)*4);
+                    Pinfo.add(Ptarray1.get(Ptarray1.size()-1),1,(Ptarray1.size()-1)*4);
+                    Pinfo.add(Plarray2.get(Plarray2.size()-1),0,(Plarray2.size()-1)*4+1);
+                    Pinfo.add(Ptarray2.get(Ptarray2.size()-1),1,(Ptarray2.size()-1)*4+1);
+                    Pinfo.add(Plarray3.get(Plarray3.size()-1),0,(Plarray3.size()-1)*4+2);
+                    Pinfo.add(Ptarray3.get(Ptarray3.size()-1),1,(Ptarray3.size()-1)*4+2);
+                    Pinfo.add(Plarray4.get(Plarray4.size()-1),0,(Plarray4.size()-1)*4+3);
+                    Pinfo.add(Ptarray4.get(Ptarray4.size()-1),1,(Ptarray4.size()-1)*4+3);
+
+                    Ptarray1.get(countProj).setText(rs.getString(2));
+                    Ptarray2.get(countProj).setText(rs.getString(3));
+                    Ptarray3.get(countProj).setText(rs.getString(4));
+                    Ptarray4.get(countProj).setText(rs.getString(5));
+                }
+
+                rs = stmt.executeQuery(sqlPR);
+                int countPR =0 ;
+                while (rs.next()){
+                    PRlarray1.add(new Label("Position name "));
+                    PRtarray1.add(new TextField());
+                    PRlarray2.add(new Label("Position held at "));
+                    PRtarray2.add(new TextField());
+                    PRlarray3.add(new Label("Position description"));
+                    PRtarray3.add(new TextArea());
+
+                    PRtarray3.get(PRtarray3.size()-1).setPrefWidth(200);
+                    PRtarray3.get(PRtarray3.size()-1).setPrefHeight(75);
+
+                    PRinfo.add(PRlarray1.get(PRlarray1.size()-1),0,(PRlarray1.size()-1)*3);
+                    PRinfo.add(PRtarray1.get(PRtarray1.size()-1),1,(PRtarray1.size()-1)*3);
+                    PRinfo.add(PRlarray2.get(PRlarray2.size()-1),0,(PRlarray2.size()-1)*3+1);
+                    PRinfo.add(PRtarray2.get(PRtarray2.size()-1),1,(PRtarray2.size()-1)*3+1);
+                    PRinfo.add(PRlarray3.get(PRlarray3.size()-1),0,(PRlarray3.size()-1)*3+2);
+                    PRinfo.add(PRtarray3.get(PRtarray3.size()-1),1,(PRtarray3.size()-1)*3+2);
+
+                    PRtarray1.get(countPR).setText(rs.getString(2));
+                    PRtarray2.get(countPR).setText(rs.getString(3));
+                    PRtarray3.get(countPR).setText(rs.getString(4));
+                }
+
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
             primaryStage.setScene(scene4);
         });
+
         B5.setOnAction(e -> {
+            Starray1.clear();
+            Starray2.clear();
+            Slarray1.clear();
+            Slarray2.clear();
+            ECAtarray1.clear();
+            ECAtarray2.clear();
+            ECAlarray1.clear();
+            ECAlarray2.clear();
+
+            try{
+                String sqlSkills = "select * from skills";
+                String sqlECA = "Select * from extracurr";
+                ResultSet rs = stmt.executeQuery(sqlSkills);
+                int countSkill = 0;
+                while(rs.next()){
+                    Slarray1.add(new Label("skill"));
+                    Starray1.add(new TextField());
+                    Slarray2.add(new Label("Proficiency"));
+                    Starray2.add(new TextField());
+                    Sinfo.add(Slarray1.get(Slarray1.size()-1),0,(Slarray1.size()-1)*2);
+                    Sinfo.add(Starray1.get(Starray1.size()-1),1,(Starray1.size()-1)*2);
+                    Sinfo.add(Slarray2.get(Slarray2.size()-1),0,(Slarray2.size()-1)*2+1);
+                    Sinfo.add(Starray2.get(Starray2.size()-1),1,(Starray2.size()-1)*2+1);
+
+                    Starray1.get(countSkill).setText(rs.getString(2));
+                    Starray2.get(countSkill).setText(rs.getString(3));
+
+                }
+
+                rs = stmt.executeQuery(sqlECA);
+                int countECA = 0;
+                while(rs.next()){
+                    ECAlarray1.add(new Label("ECA name"));
+                    ECAtarray1.add(new TextField());
+                    ECAlarray2.add(new Label("ECA decription"));
+                    ECAtarray2.add(new TextArea());
+
+                    ECAtarray2.get(ECAtarray2.size()-1).setPrefWidth(200);
+                    ECAtarray2.get(ECAtarray2.size()-1).setPrefHeight(75);
+
+                    ECAinfo.add(ECAlarray1.get(ECAlarray1.size()-1),0,(ECAlarray1.size()-1)*2);
+                    ECAinfo.add(ECAtarray1.get(ECAtarray1.size()-1),1,(ECAtarray1.size()-1)*2);
+                    ECAinfo.add(ECAlarray2.get(ECAlarray2.size()-1),0,(ECAlarray2.size()-1)*2+1);
+                    ECAinfo.add(ECAtarray2.get(ECAtarray2.size()-1),1,(ECAtarray2.size()-1)*2+1);
+
+                    ECAtarray1.get(countECA).setText(rs.getString(2));
+                    ECAtarray2.get(countECA).setText(rs.getString(3));
+                }
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
             primaryStage.setScene(scene5);
         });
 
@@ -1015,6 +1335,618 @@ public class Main extends Application {
             }
         });
 
+        PInext.setOnAction(e->{
+            Ularray1.clear();
+            Ularray2.clear();
+            Ularray3.clear();
+            Ularray4.clear();
+            Ularray5.clear();
+            Utarray1.clear();
+            Utarray2.clear();
+            Utarray3.clear();
+            Utarray4.clear();
+            Utarray5.clear();
+            try{
+                String HSsql = "select * from education where UID = " + U_id + " and degree = '10th'";
+                String ICsql = "select * from education where UID = " + U_id + " and degree = '12th'";
+                String pdSQL = "select * from education where UID = " + U_id + " and degree not in ('12th','10th')";
+
+                ResultSet HSrs = stmt.executeQuery(HSsql);
+                if(HSrs.next()){
+                    TEschoolinput.setText(HSrs.getString("institution"));
+                    TEboardinput.setText(HSrs.getString("board"));
+                    TEpercentageinput.setText(HSrs.getString("percentage"));
+                    TEyearinput.setText(HSrs.getString("passyear"));
+                }
+
+                HSrs = stmt.executeQuery(ICsql);
+                if(HSrs.next()){
+                    TWschoolinput.setText(HSrs.getString("institution"));
+                    TWboardinput.setText(HSrs.getString("board"));
+                    TWpercentageinput.setText(HSrs.getString("percentage"));
+                    TWyearinput.setText(HSrs.getString("passyear"));
+                }
+
+                HSrs = stmt.executeQuery(pdSQL);
+                int count = 0;
+                while(HSrs.next()){
+                    Ularray1.add(new Label("Degree"));
+                    Utarray1.add(new TextField());
+                    Ularray2.add(new Label("Instituion "));
+                    Utarray2.add(new TextField());
+                    Ularray3.add(new Label("Board"));
+                    Utarray3.add(new TextField());
+                    Ularray4.add(new Label("CGPA/Percentage"));
+                    Utarray4.add(new TextField());
+                    Ularray5.add(new Label("Year Passed:"));
+                    Utarray5.add(new TextField());
+
+
+                    Uinfo.add(Ularray1.get(Ularray1.size()-1),0,(Ularray1.size()-1)*5);
+                    Uinfo.add(Utarray1.get(Utarray1.size()-1),1,(Utarray1.size()-1)*5);
+                    Uinfo.add(Ularray2.get(Ularray2.size()-1),0,(Ularray2.size()-1)*5+1);
+                    Uinfo.add(Utarray2.get(Utarray2.size()-1),1,(Utarray2.size()-1)*5+1);
+                    Uinfo.add(Ularray3.get(Ularray3.size()-1),0,(Ularray3.size()-1)*5+2);
+                    Uinfo.add(Utarray3.get(Utarray3.size()-1),1,(Utarray3.size()-1)*5+2);
+                    Uinfo.add(Ularray4.get(Ularray4.size()-1),0,(Ularray4.size()-1)*5+3);
+                    Uinfo.add(Utarray4.get(Utarray4.size()-1),1,(Utarray4.size()-1)*5+3);
+                    Uinfo.add(Ularray5.get(Ularray5.size()-1),0,(Ularray5.size()-1)*5+4);
+                    Uinfo.add(Utarray5.get(Utarray5.size()-1),1,(Utarray5.size()-1)*5+4);
+
+                    Utarray1.get(count).setText(HSrs.getString(2));
+                    Utarray2.get(count).setText(HSrs.getString(3));
+                    Utarray3.get(count).setText(HSrs.getString(4));
+                    Utarray4.get(count).setText(HSrs.getString(5));
+                    Utarray5.get(count).setText(HSrs.getString(6));
+                    count++;
+                }
+
+
+                primaryStage.setScene(scene2);
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+        });
+
+        EEnext.setOnAction(e->{
+            Clarray1.clear();
+            Clarray2.clear();
+            Clarray3.clear();
+            Clarray4.clear();
+            Clarray5.clear();
+            Ilarray1.clear();
+            Ilarray2.clear();
+            Ilarray3.clear();
+            Ilarray4.clear();
+            Ilarray5.clear();
+
+            Ctarray1.clear();
+            Ctarray2.clear();
+            Ctarray3.clear();
+            Ctarray4.clear();
+            Ctarray5.clear();
+            Itarray1.clear();
+            Itarray2.clear();
+            Itarray3.clear();
+            Itarray4.clear();
+            Itarray5.clear();
+            try{
+                String sqlCom = "select * from experience where jType = 'Regular'";
+                String sqlInt = "select * from experience where jType = 'Internship'";
+
+                ResultSet rs = stmt.executeQuery(sqlCom);
+                int countCom=0;
+                while(rs.next()){
+                    Clarray1.add(new Label("Company Name"));
+                    Ctarray1.add(new TextField());
+                    Clarray2.add(new Label("Position"));
+                    Ctarray2.add(new TextField());
+                    Clarray3.add(new Label("Period"));
+                    Ctarray3.add(new TextField());
+                    Clarray4.add(new Label("Salary"));
+                    Ctarray4.add(new TextField());
+                    Clarray5.add(new Label("Description :"));
+                    Ctarray5.add(new TextArea());
+
+                    Ctarray5.get(Ctarray5.size()-1).setPrefWidth(200);
+                    Ctarray5.get(Ctarray5.size()-1).setPrefHeight(75);
+
+                    Cinfo.add(Clarray1.get(Clarray1.size()-1),0,(Clarray1.size()-1)*5);
+                    Cinfo.add(Ctarray1.get(Ctarray1.size()-1),1,(Ctarray1.size()-1)*5);
+                    Cinfo.add(Clarray2.get(Clarray2.size()-1),0,(Clarray2.size()-1)*5+1);
+                    Cinfo.add(Ctarray2.get(Ctarray2.size()-1),1,(Ctarray2.size()-1)*5+1);
+                    Cinfo.add(Clarray3.get(Clarray3.size()-1),0,(Clarray3.size()-1)*5+2);
+                    Cinfo.add(Ctarray3.get(Ctarray3.size()-1),1,(Ctarray3.size()-1)*5+2);
+                    Cinfo.add(Clarray4.get(Clarray4.size()-1),0,(Clarray4.size()-1)*5+3);
+                    Cinfo.add(Ctarray4.get(Ctarray4.size()-1),1,(Ctarray4.size()-1)*5+3);
+                    Cinfo.add(Clarray5.get(Clarray5.size()-1),0,(Clarray5.size()-1)*5+4);
+                    Cinfo.add(Ctarray5.get(Ctarray5.size()-1),1,(Ctarray5.size()-1)*5+4);
+
+                    Ctarray1.get(countCom).setText(rs.getString(2));
+                    Ctarray2.get(countCom).setText(rs.getString(3));
+                    Ctarray3.get(countCom).setText(rs.getString(4));
+                    Ctarray4.get(countCom).setText(rs.getString(6));
+                    Ctarray5.get(countCom).setText(rs.getString(7));
+                    countCom++;
+                }
+
+                rs = stmt.executeQuery(sqlInt);
+                int countInt=0;
+                while(rs.next()){
+                    Ilarray1.add(new Label("Company Name"));
+                    Itarray1.add(new TextField());
+                    Ilarray2.add(new Label("Position"));
+                    Itarray2.add(new TextField());
+                    Ilarray3.add(new Label("Period"));
+                    Itarray3.add(new TextField());
+                    Ilarray4.add(new Label("Stipend"));
+                    Itarray4.add(new TextField());
+                    Ilarray5.add(new Label("Description :"));
+                    Itarray5.add(new TextArea());
+
+                    Itarray5.get(Itarray5.size()-1).setPrefWidth(200);
+                    Itarray5.get(Itarray5.size()-1).setPrefHeight(75);
+
+
+                    Iinfo.add(Ilarray1.get(Ilarray1.size()-1),0,(Ilarray1.size()-1)*5);
+                    Iinfo.add(Itarray1.get(Itarray1.size()-1),1,(Itarray1.size()-1)*5);
+                    Iinfo.add(Ilarray2.get(Ilarray2.size()-1),0,(Ilarray2.size()-1)*5+1);
+                    Iinfo.add(Itarray2.get(Itarray2.size()-1),1,(Itarray2.size()-1)*5+1);
+                    Iinfo.add(Ilarray3.get(Ilarray3.size()-1),0,(Ilarray3.size()-1)*5+2);
+                    Iinfo.add(Itarray3.get(Itarray3.size()-1),1,(Itarray3.size()-1)*5+2);
+                    Iinfo.add(Ilarray4.get(Ilarray4.size()-1),0,(Ilarray4.size()-1)*5+3);
+                    Iinfo.add(Itarray4.get(Itarray4.size()-1),1,(Itarray4.size()-1)*5+3);
+                    Iinfo.add(Ilarray5.get(Ilarray5.size()-1),0,(Ilarray5.size()-1)*5+4);
+                    Iinfo.add(Itarray5.get(Itarray5.size()-1),1,(Itarray5.size()-1)*5+4);
+
+                    Itarray1.get(countInt).setText(rs.getString(2));
+                    Itarray2.get(countInt).setText(rs.getString(3));
+                    Itarray3.get(countInt).setText(rs.getString(4));
+                    Itarray4.get(countInt).setText(rs.getString(6));
+                    Itarray5.get(countInt).setText(rs.getString(7));
+                    countInt++;
+                }
+
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+
+            primaryStage.setScene(scene3);
+        });
+
+        EEback.setOnAction(e->{
+
+            try{
+
+                String fetchSQL = "Select * from personaldetails where UID = " + U_id;
+                ResultSet rs = stmt.executeQuery(fetchSQL);
+                rs.absolute(1);
+                AFnameinput.setText(rs.getString(2));
+                ALnameinput.setText(rs.getString(3));
+                ADOBinput.setText(rs.getString("DOB"));
+                Agenderinput.setText(rs.getString("gender"));
+                Acategoryinput.setText(rs.getString("category"));
+                CDemailinput.setText(rs.getString("email"));
+                CDmobileinput.setText(rs.getString("mobile"));
+                Lhouseinput.setText(rs.getString("HNO"));
+                LStreetInput.setText(rs.getString("Street"));
+                LCityInput.setText(rs.getString("city"));
+                LCountryinput.setText(rs.getString("country"));
+                Lpincodeinput.setText(rs.getString("pincode"));
+
+                fetchSQL = "Select * from guardiandetails where UID = " + U_id;
+                rs = stmt.executeQuery(fetchSQL);
+                rs.absolute(1);
+                Gfnameinput.setText(rs.getString(2));
+                Gmnameinput.setText(rs.getString(3));
+                Gfnumberinput.setText(rs.getString(4));
+                Gmnumberinput.setText(rs.getString(5));
+                Gfoccupationinput.setText(rs.getString(6));
+                Gmoccupationinput.setText(rs.getString(7));
+
+            }catch(SQLException exception){
+                exception.getStackTrace();
+            }
+            primaryStage.setScene(scene1);
+        });
+
+        EXback.setOnAction(e->{
+            Ularray1.clear();
+            Ularray2.clear();
+            Ularray3.clear();
+            Ularray4.clear();
+            Ularray5.clear();
+            Utarray1.clear();
+            Utarray2.clear();
+            Utarray3.clear();
+            Utarray4.clear();
+            Utarray5.clear();
+            try{
+                String HSsql = "select * from education where UID = " + U_id + " and degree = '10th'";
+                String ICsql = "select * from education where UID = " + U_id + " and degree = '12th'";
+                String pdSQL = "select * from education where UID = " + U_id + " and degree not in ('12th','10th')";
+
+                ResultSet HSrs = stmt.executeQuery(HSsql);
+                if(HSrs.next()){
+                    TEschoolinput.setText(HSrs.getString("institution"));
+                    TEboardinput.setText(HSrs.getString("board"));
+                    TEpercentageinput.setText(HSrs.getString("percentage"));
+                    TEyearinput.setText(HSrs.getString("passyear"));
+                }
+
+                HSrs = stmt.executeQuery(ICsql);
+                if(HSrs.next()){
+                    TWschoolinput.setText(HSrs.getString("institution"));
+                    TWboardinput.setText(HSrs.getString("board"));
+                    TWpercentageinput.setText(HSrs.getString("percentage"));
+                    TWyearinput.setText(HSrs.getString("passyear"));
+                }
+
+                HSrs = stmt.executeQuery(pdSQL);
+                int count = 0;
+                while(HSrs.next()){
+                    Ularray1.add(new Label("Degree"));
+                    Utarray1.add(new TextField());
+                    Ularray2.add(new Label("Instituion "));
+                    Utarray2.add(new TextField());
+                    Ularray3.add(new Label("Board"));
+                    Utarray3.add(new TextField());
+                    Ularray4.add(new Label("CGPA/Percentage"));
+                    Utarray4.add(new TextField());
+                    Ularray5.add(new Label("Year Passed:"));
+                    Utarray5.add(new TextField());
+
+
+                    Uinfo.add(Ularray1.get(Ularray1.size()-1),0,(Ularray1.size()-1)*5);
+                    Uinfo.add(Utarray1.get(Utarray1.size()-1),1,(Utarray1.size()-1)*5);
+                    Uinfo.add(Ularray2.get(Ularray2.size()-1),0,(Ularray2.size()-1)*5+1);
+                    Uinfo.add(Utarray2.get(Utarray2.size()-1),1,(Utarray2.size()-1)*5+1);
+                    Uinfo.add(Ularray3.get(Ularray3.size()-1),0,(Ularray3.size()-1)*5+2);
+                    Uinfo.add(Utarray3.get(Utarray3.size()-1),1,(Utarray3.size()-1)*5+2);
+                    Uinfo.add(Ularray4.get(Ularray4.size()-1),0,(Ularray4.size()-1)*5+3);
+                    Uinfo.add(Utarray4.get(Utarray4.size()-1),1,(Utarray4.size()-1)*5+3);
+                    Uinfo.add(Ularray5.get(Ularray5.size()-1),0,(Ularray5.size()-1)*5+4);
+                    Uinfo.add(Utarray5.get(Utarray5.size()-1),1,(Utarray5.size()-1)*5+4);
+
+                    Utarray1.get(count).setText(HSrs.getString(2));
+                    Utarray2.get(count).setText(HSrs.getString(3));
+                    Utarray3.get(count).setText(HSrs.getString(4));
+                    Utarray4.get(count).setText(HSrs.getString(5));
+                    Utarray5.get(count).setText(HSrs.getString(6));
+                    count++;
+                }
+
+                primaryStage.setScene(scene2);
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+        });
+
+        EXnext.setOnAction(e->{
+            Plarray1.clear();
+            Plarray2.clear();
+            Plarray3.clear();
+            Plarray4.clear();
+            Ptarray1.clear();
+            Ptarray2.clear();
+            Ptarray3.clear();
+            Ptarray4.clear();
+
+            PRlarray1.clear();
+            PRlarray2.clear();
+            PRlarray3.clear();
+            PRtarray1.clear();
+            PRtarray2.clear();
+            PRtarray3.clear();
+            try{
+                String sqlProj = "select * from projects";
+                String sqlPR = "select * from pos_resp";
+
+                ResultSet rs = stmt.executeQuery(sqlProj);
+                int countProj=0;
+                while (rs.next()){
+                    Plarray1.add(new Label("Project name"));
+                    Ptarray1.add(new TextField());
+                    Plarray2.add(new Label("Project Domain "));
+                    Ptarray2.add(new TextField());
+                    Plarray3.add(new Label("Company/Institution"));
+                    Ptarray3.add(new TextField());
+                    Plarray4.add(new Label("Description"));
+                    Ptarray4.add(new TextArea());
+
+                    Ptarray4.get(Ptarray4.size()-1).setPrefWidth(200);
+                    Ptarray4.get(Ptarray4.size()-1).setPrefHeight(75);
+
+                    Pinfo.add(Plarray1.get(Plarray1.size()-1),0,(Plarray1.size()-1)*4);
+                    Pinfo.add(Ptarray1.get(Ptarray1.size()-1),1,(Ptarray1.size()-1)*4);
+                    Pinfo.add(Plarray2.get(Plarray2.size()-1),0,(Plarray2.size()-1)*4+1);
+                    Pinfo.add(Ptarray2.get(Ptarray2.size()-1),1,(Ptarray2.size()-1)*4+1);
+                    Pinfo.add(Plarray3.get(Plarray3.size()-1),0,(Plarray3.size()-1)*4+2);
+                    Pinfo.add(Ptarray3.get(Ptarray3.size()-1),1,(Ptarray3.size()-1)*4+2);
+                    Pinfo.add(Plarray4.get(Plarray4.size()-1),0,(Plarray4.size()-1)*4+3);
+                    Pinfo.add(Ptarray4.get(Ptarray4.size()-1),1,(Ptarray4.size()-1)*4+3);
+
+                    Ptarray1.get(countProj).setText(rs.getString(2));
+                    Ptarray2.get(countProj).setText(rs.getString(3));
+                    Ptarray3.get(countProj).setText(rs.getString(4));
+                    Ptarray4.get(countProj).setText(rs.getString(5));
+                }
+
+                rs = stmt.executeQuery(sqlPR);
+                int countPR =0 ;
+                while (rs.next()){
+                    PRlarray1.add(new Label("Position name "));
+                    PRtarray1.add(new TextField());
+                    PRlarray2.add(new Label("Position held at "));
+                    PRtarray2.add(new TextField());
+                    PRlarray3.add(new Label("Position description"));
+                    PRtarray3.add(new TextArea());
+
+                    PRtarray3.get(PRtarray3.size()-1).setPrefWidth(200);
+                    PRtarray3.get(PRtarray3.size()-1).setPrefHeight(75);
+
+                    PRinfo.add(PRlarray1.get(PRlarray1.size()-1),0,(PRlarray1.size()-1)*3);
+                    PRinfo.add(PRtarray1.get(PRtarray1.size()-1),1,(PRtarray1.size()-1)*3);
+                    PRinfo.add(PRlarray2.get(PRlarray2.size()-1),0,(PRlarray2.size()-1)*3+1);
+                    PRinfo.add(PRtarray2.get(PRtarray2.size()-1),1,(PRtarray2.size()-1)*3+1);
+                    PRinfo.add(PRlarray3.get(PRlarray3.size()-1),0,(PRlarray3.size()-1)*3+2);
+                    PRinfo.add(PRtarray3.get(PRtarray3.size()-1),1,(PRtarray3.size()-1)*3+2);
+
+                    PRtarray1.get(countPR).setText(rs.getString(2));
+                    PRtarray2.get(countPR).setText(rs.getString(3));
+                    PRtarray3.get(countPR).setText(rs.getString(4));
+                }
+
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+            primaryStage.setScene(scene4);
+        });
+
+        SECAback.setOnAction(e->{
+            Plarray1.clear();
+            Plarray2.clear();
+            Plarray3.clear();
+            Plarray4.clear();
+            Ptarray1.clear();
+            Ptarray2.clear();
+            Ptarray3.clear();
+            Ptarray4.clear();
+
+            PRlarray1.clear();
+            PRlarray2.clear();
+            PRlarray3.clear();
+            PRtarray1.clear();
+            PRtarray2.clear();
+            PRtarray3.clear();
+            try{
+                String sqlProj = "select * from projects";
+                String sqlPR = "select * from pos_resp";
+
+                ResultSet rs = stmt.executeQuery(sqlProj);
+                int countProj=0;
+                while (rs.next()){
+                    Plarray1.add(new Label("Project name"));
+                    Ptarray1.add(new TextField());
+                    Plarray2.add(new Label("Project Domain "));
+                    Ptarray2.add(new TextField());
+                    Plarray3.add(new Label("Company/Institution"));
+                    Ptarray3.add(new TextField());
+                    Plarray4.add(new Label("Description"));
+                    Ptarray4.add(new TextArea());
+
+                    Ptarray4.get(Ptarray4.size()-1).setPrefWidth(200);
+                    Ptarray4.get(Ptarray4.size()-1).setPrefHeight(75);
+
+                    Pinfo.add(Plarray1.get(Plarray1.size()-1),0,(Plarray1.size()-1)*4);
+                    Pinfo.add(Ptarray1.get(Ptarray1.size()-1),1,(Ptarray1.size()-1)*4);
+                    Pinfo.add(Plarray2.get(Plarray2.size()-1),0,(Plarray2.size()-1)*4+1);
+                    Pinfo.add(Ptarray2.get(Ptarray2.size()-1),1,(Ptarray2.size()-1)*4+1);
+                    Pinfo.add(Plarray3.get(Plarray3.size()-1),0,(Plarray3.size()-1)*4+2);
+                    Pinfo.add(Ptarray3.get(Ptarray3.size()-1),1,(Ptarray3.size()-1)*4+2);
+                    Pinfo.add(Plarray4.get(Plarray4.size()-1),0,(Plarray4.size()-1)*4+3);
+                    Pinfo.add(Ptarray4.get(Ptarray4.size()-1),1,(Ptarray4.size()-1)*4+3);
+
+                    Ptarray1.get(countProj).setText(rs.getString(2));
+                    Ptarray2.get(countProj).setText(rs.getString(3));
+                    Ptarray3.get(countProj).setText(rs.getString(4));
+                    Ptarray4.get(countProj).setText(rs.getString(5));
+                }
+
+                rs = stmt.executeQuery(sqlPR);
+                int countPR =0 ;
+                while (rs.next()){
+                    PRlarray1.add(new Label("Position name "));
+                    PRtarray1.add(new TextField());
+                    PRlarray2.add(new Label("Position held at "));
+                    PRtarray2.add(new TextField());
+                    PRlarray3.add(new Label("Position description"));
+                    PRtarray3.add(new TextArea());
+
+                    PRtarray3.get(PRtarray3.size()-1).setPrefWidth(200);
+                    PRtarray3.get(PRtarray3.size()-1).setPrefHeight(75);
+
+                    PRinfo.add(PRlarray1.get(PRlarray1.size()-1),0,(PRlarray1.size()-1)*3);
+                    PRinfo.add(PRtarray1.get(PRtarray1.size()-1),1,(PRtarray1.size()-1)*3);
+                    PRinfo.add(PRlarray2.get(PRlarray2.size()-1),0,(PRlarray2.size()-1)*3+1);
+                    PRinfo.add(PRtarray2.get(PRtarray2.size()-1),1,(PRtarray2.size()-1)*3+1);
+                    PRinfo.add(PRlarray3.get(PRlarray3.size()-1),0,(PRlarray3.size()-1)*3+2);
+                    PRinfo.add(PRtarray3.get(PRtarray3.size()-1),1,(PRtarray3.size()-1)*3+2);
+
+                    PRtarray1.get(countPR).setText(rs.getString(2));
+                    PRtarray2.get(countPR).setText(rs.getString(3));
+                    PRtarray3.get(countPR).setText(rs.getString(4));
+                }
+
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+            primaryStage.setScene(scene4);
+        });
+        PPRback.setOnAction(e->{
+            Clarray1.clear();
+            Clarray2.clear();
+            Clarray3.clear();
+            Clarray4.clear();
+            Clarray5.clear();
+            Ilarray1.clear();
+            Ilarray2.clear();
+            Ilarray3.clear();
+            Ilarray4.clear();
+            Ilarray5.clear();
+
+            Ctarray1.clear();
+            Ctarray2.clear();
+            Ctarray3.clear();
+            Ctarray4.clear();
+            Ctarray5.clear();
+            Itarray1.clear();
+            Itarray2.clear();
+            Itarray3.clear();
+            Itarray4.clear();
+            Itarray5.clear();
+            try{
+                String sqlCom = "select * from experience where jType = 'Regular'";
+                String sqlInt = "select * from experience where jType = 'Internship'";
+
+                ResultSet rs = stmt.executeQuery(sqlCom);
+                int countCom=0;
+                while(rs.next()){
+                    Clarray1.add(new Label("Company Name"));
+                    Ctarray1.add(new TextField());
+                    Clarray2.add(new Label("Position"));
+                    Ctarray2.add(new TextField());
+                    Clarray3.add(new Label("Period"));
+                    Ctarray3.add(new TextField());
+                    Clarray4.add(new Label("Salary"));
+                    Ctarray4.add(new TextField());
+                    Clarray5.add(new Label("Description :"));
+                    Ctarray5.add(new TextArea());
+
+                    Ctarray5.get(Ctarray5.size()-1).setPrefWidth(200);
+                    Ctarray5.get(Ctarray5.size()-1).setPrefHeight(75);
+
+                    Cinfo.add(Clarray1.get(Clarray1.size()-1),0,(Clarray1.size()-1)*5);
+                    Cinfo.add(Ctarray1.get(Ctarray1.size()-1),1,(Ctarray1.size()-1)*5);
+                    Cinfo.add(Clarray2.get(Clarray2.size()-1),0,(Clarray2.size()-1)*5+1);
+                    Cinfo.add(Ctarray2.get(Ctarray2.size()-1),1,(Ctarray2.size()-1)*5+1);
+                    Cinfo.add(Clarray3.get(Clarray3.size()-1),0,(Clarray3.size()-1)*5+2);
+                    Cinfo.add(Ctarray3.get(Ctarray3.size()-1),1,(Ctarray3.size()-1)*5+2);
+                    Cinfo.add(Clarray4.get(Clarray4.size()-1),0,(Clarray4.size()-1)*5+3);
+                    Cinfo.add(Ctarray4.get(Ctarray4.size()-1),1,(Ctarray4.size()-1)*5+3);
+                    Cinfo.add(Clarray5.get(Clarray5.size()-1),0,(Clarray5.size()-1)*5+4);
+                    Cinfo.add(Ctarray5.get(Ctarray5.size()-1),1,(Ctarray5.size()-1)*5+4);
+
+                    Ctarray1.get(countCom).setText(rs.getString(2));
+                    Ctarray2.get(countCom).setText(rs.getString(3));
+                    Ctarray3.get(countCom).setText(rs.getString(4));
+                    Ctarray4.get(countCom).setText(rs.getString(6));
+                    Ctarray5.get(countCom).setText(rs.getString(7));
+                    countCom++;
+                }
+
+                rs = stmt.executeQuery(sqlInt);
+                int countInt=0;
+                while(rs.next()){
+                    Ilarray1.add(new Label("Company Name"));
+                    Itarray1.add(new TextField());
+                    Ilarray2.add(new Label("Position"));
+                    Itarray2.add(new TextField());
+                    Ilarray3.add(new Label("Period"));
+                    Itarray3.add(new TextField());
+                    Ilarray4.add(new Label("Stipend"));
+                    Itarray4.add(new TextField());
+                    Ilarray5.add(new Label("Description :"));
+                    Itarray5.add(new TextArea());
+
+                    Itarray5.get(Itarray5.size()-1).setPrefWidth(200);
+                    Itarray5.get(Itarray5.size()-1).setPrefHeight(75);
+
+
+                    Iinfo.add(Ilarray1.get(Ilarray1.size()-1),0,(Ilarray1.size()-1)*5);
+                    Iinfo.add(Itarray1.get(Itarray1.size()-1),1,(Itarray1.size()-1)*5);
+                    Iinfo.add(Ilarray2.get(Ilarray2.size()-1),0,(Ilarray2.size()-1)*5+1);
+                    Iinfo.add(Itarray2.get(Itarray2.size()-1),1,(Itarray2.size()-1)*5+1);
+                    Iinfo.add(Ilarray3.get(Ilarray3.size()-1),0,(Ilarray3.size()-1)*5+2);
+                    Iinfo.add(Itarray3.get(Itarray3.size()-1),1,(Itarray3.size()-1)*5+2);
+                    Iinfo.add(Ilarray4.get(Ilarray4.size()-1),0,(Ilarray4.size()-1)*5+3);
+                    Iinfo.add(Itarray4.get(Itarray4.size()-1),1,(Itarray4.size()-1)*5+3);
+                    Iinfo.add(Ilarray5.get(Ilarray5.size()-1),0,(Ilarray5.size()-1)*5+4);
+                    Iinfo.add(Itarray5.get(Itarray5.size()-1),1,(Itarray5.size()-1)*5+4);
+
+                    Itarray1.get(countInt).setText(rs.getString(2));
+                    Itarray2.get(countInt).setText(rs.getString(3));
+                    Itarray3.get(countInt).setText(rs.getString(4));
+                    Itarray4.get(countInt).setText(rs.getString(6));
+                    Itarray5.get(countInt).setText(rs.getString(7));
+                    countInt++;
+                }
+
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+
+            primaryStage.setScene(scene3);
+        });
+
+        PPRnext.setOnAction(e->{
+            Starray1.clear();
+            Starray2.clear();
+            Slarray1.clear();
+            Slarray2.clear();
+            ECAtarray1.clear();
+            ECAtarray2.clear();
+            ECAlarray1.clear();
+            ECAlarray2.clear();
+            try{
+                String sqlSkills = "select * from skills";
+                String sqlECA = "Select * from extracurr";
+                ResultSet rs = stmt.executeQuery(sqlSkills);
+                int countSkill = 0;
+                while(rs.next()){
+                    Slarray1.add(new Label("skill"));
+                    Starray1.add(new TextField());
+                    Slarray2.add(new Label("Proficiency"));
+                    Starray2.add(new TextField());
+                    Sinfo.add(Slarray1.get(Slarray1.size()-1),0,(Slarray1.size()-1)*2);
+                    Sinfo.add(Starray1.get(Starray1.size()-1),1,(Starray1.size()-1)*2);
+                    Sinfo.add(Slarray2.get(Slarray2.size()-1),0,(Slarray2.size()-1)*2+1);
+                    Sinfo.add(Starray2.get(Starray2.size()-1),1,(Starray2.size()-1)*2+1);
+
+                    Starray1.get(countSkill).setText(rs.getString(2));
+                    Starray2.get(countSkill).setText(rs.getString(3));
+
+                }
+
+                rs = stmt.executeQuery(sqlECA);
+                int countECA = 0;
+                while(rs.next()){
+                    ECAlarray1.add(new Label("ECA name"));
+                    ECAtarray1.add(new TextField());
+                    ECAlarray2.add(new Label("ECA decription"));
+                    ECAtarray2.add(new TextArea());
+
+                    ECAtarray2.get(ECAtarray2.size()-1).setPrefWidth(200);
+                    ECAtarray2.get(ECAtarray2.size()-1).setPrefHeight(75);
+
+                    ECAinfo.add(ECAlarray1.get(ECAlarray1.size()-1),0,(ECAlarray1.size()-1)*2);
+                    ECAinfo.add(ECAtarray1.get(ECAtarray1.size()-1),1,(ECAtarray1.size()-1)*2);
+                    ECAinfo.add(ECAlarray2.get(ECAlarray2.size()-1),0,(ECAlarray2.size()-1)*2+1);
+                    ECAinfo.add(ECAtarray2.get(ECAtarray2.size()-1),1,(ECAtarray2.size()-1)*2+1);
+
+                    ECAtarray1.get(countECA).setText(rs.getString(2));
+                    ECAtarray2.get(countECA).setText(rs.getString(3));
+                }
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+            primaryStage.setScene(scene5);
+        });
+
+        EEsave.setOnAction(e ->{
+
+        });
+
 
 
         primaryStage.setTitle("CV Builder");
@@ -1022,6 +1954,7 @@ public class Main extends Application {
         primaryStage.show();
 
     }
+
 }
 
 
