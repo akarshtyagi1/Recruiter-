@@ -9,6 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="JavaFX-11" level="application" />
     <orderEntry type="library" name="mysql-connector-java-8.0.23" level="application" />
-    <orderEntry type="library" name="javafx.web" level="application" />
+    <orderEntry type="library" name="rs2xml" level="project" />
+    <orderEntry type="library" name="rs2xml1" level="project" />
   </component>
 </module>
